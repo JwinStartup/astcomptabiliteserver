@@ -18,7 +18,7 @@ listeCharge,
 voirByIdBilan,
 cloturerBilan,
 listeBilan,
-} = require("../controllers/comptabiliteController.js");
+} = require("../Controllers/comptabiliteController.js");
 const auth = require("../Middleware/auth.js");
 
 /* ----------------------- facture ---------------------------------*/
