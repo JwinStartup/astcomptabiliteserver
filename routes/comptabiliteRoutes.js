@@ -1,0 +1,50 @@
+const express = require("express");
+
+
+const router = express.Router();
+//const auth = require("../middleware/auth");
+const {
+  creerFacture,
+  modifieFacture,
+payerFacture,
+supprimerFacture,
+voirByIdFacture,
+listeFacture,
+voirByIdRecue,
+listeRecue,
+listeComission,
+creerCharge,
+listeCharge,
+voirByIdBilan,
+cloturerBilan,
+listeBilan,
+} = require("../controllers/comptabiliteController.js");
+const auth = require("../Middleware/auth.js");
+
+/* ----------------------- facture ---------------------------------*/
+router.post("/creerFacture",auth, creerFacture);
+router.get("/listeFacture",auth, listeFacture);
+router.post("/modifieFacture", modifieFacture);
+router.post("/payerFacture",auth, payerFacture);
+router.get("/supprimerFacture/id", supprimerFacture);
+router.get("/voirByIdFacture/:id", voirByIdFacture);
+
+/* ----------------------- reçues ---------------------------------*/
+router.get("/voirByIdRecue/:id", voirByIdRecue);
+router.get("/listeRecue",auth, listeRecue);
+
+/* ----------------------- commissions ---------------------------------*/
+router.get("/listeComission",auth, listeComission);
+
+/* ----------------------- Charges ---------------------------------*/
+router.post("/creerCharge",auth, creerCharge);
+router.get("/listeCharge",auth, listeCharge); 
+
+/* ----------------------- Bilan ---------------------------------*/
+router.post("/cloturerBilan", cloturerBilan);
+router.get("/voirByIdBilan/:id",auth, voirByIdBilan);    
+router.get("/listeBilan",auth, listeBilan);
+
+module.exports = {
+  routes: router,
+};
