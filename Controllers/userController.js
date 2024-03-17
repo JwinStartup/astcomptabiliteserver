@@ -75,6 +75,7 @@ const listePersonnel= async (req, res, next) => {
 }
 
 const inscription = async (req, res, next) => {
+  console.log(req.body)
   try {
     const userExist = await User.findOne({ nom: req.body.nom });
     if (userExist) {
