@@ -15,7 +15,7 @@ const {
   modifierRole,
   lister,
   supprime,
-} = require("../Controllers/userController.js");
+} = require("Controllers/userController.js");
 const auth = require("../Middleware/auth.js");
 
 router.post("/inscription", inscription);
