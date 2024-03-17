@@ -8,7 +8,7 @@ const comptabilite = require("./routes/comptabiliteRoutes.js");
 //const preinscription = require("./routes/preinscriptionRoutes.js");
 const cookieParser=require('cookie-parser')
 
-const port = 8080;
+const port =process.env.PORT || 8080;
 const app = express();
 app.use(express.json());
 const corsOption={
