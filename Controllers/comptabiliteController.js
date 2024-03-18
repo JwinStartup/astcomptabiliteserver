@@ -159,11 +159,11 @@ const creerCharge= async (req, res, next) => {
             const arrayCharge= await Charge.find({periode:periode,creerPar:req.user})
             const arrayRecue= await Recue.find({periode:periode,creerPar:req.user})
                 const bilanPeriode= await Bilan.findById(req.params.id)
-               bilanPeriode.commission= arrayComm.reduce((acc,cur)=> acc + cur.montant,0)
-               bilanPeriode.charge= arrayCharge.reduce((acc,cur)=> acc + cur.montant,0)
-               bilanPeriode.recette= arrayRecue.reduce((acc,cur)=> acc + cur.montant,0)
+               bilanPeriode.commission=  await arrayComm.reduce((acc,cur)=> acc + cur.montant,0)
+               bilanPeriode.charge= await arrayCharge.reduce((acc,cur)=> acc + cur.montant,0)
+               bilanPeriode.recette= await arrayRecue.reduce((acc,cur)=> acc + cur.montant,0)
                  await  bilanPeriode.save().then((doc)=>res.status(200).json(doc))
-                   
+                   console.log(bilanPeriode)
             }catch(error){
              console.log(error)
             }
