@@ -131,7 +131,7 @@ const connexion = async (req, res, next) => {
         expiresIn: "1d",
       }
     );
-    res.cookie('jwt', token,{sameSite: "none",maxAge: new Date(Date.now() + (3600 * 1000 * 24 * 180 * 1))})
+    res.cookie('jwt', token,{sameSite: "none",secure: "true",maxAge: new Date(Date.now() + (3600 * 1000 * 24 * 180 * 1))})
     res.status(200).json({ user:user})
   } catch (error) {
     res.status(404).json(error);
@@ -154,7 +154,7 @@ const supprime = async (req, res, next) => {
 };
 const deconnexion = async (req, res, next) => {
   try {
-    res.cookie('jwt','',{maxAge:1,sameSite: "none",});
+    res.cookie('jwt','',{maxAge:1,sameSite: "none",secure: "true"});
     res.status(200).json({message:"logout"})
   } catch (error) {
   }
