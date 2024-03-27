@@ -44,7 +44,7 @@ router.get("/listeCharge",auth, listeCharge);
 /* ----------------------- Bilan ---------------------------------*/
 router.post("/cloturerBilan", cloturerBilan);
 router.get("/voirByIdBilan/:id",auth, voirByIdBilan); 
-router.get("/partager/:url",partager);
+router.get("/partager/:id",partager);
 router.get("/listeBilan",auth, listeBilan);
 
 module.exports = {
