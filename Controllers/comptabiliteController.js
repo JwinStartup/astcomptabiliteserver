@@ -4,12 +4,7 @@ const Commission = require("../models/commission.js");
 const Bilan = require("../models/bilan.js");
 const Charge = require("../models/charge.js");
 const moment = require("moment")
-const cloudinary = require('cloudinary').v2
-cloudinary.config({ 
-  cloud_name: 'cfcunadoc', 
-  api_key: '121279647952858', 
-  api_secret: 'PcZT5j4OaEyZjtUbZsC3iVCksO8' 
-});
+
 const periode=`${moment(new Date()).locale('fr').format("MMM")}  ${moment(new Date()).locale('fr').format("YYYY")}`
  
     /* ----------------------- facture ---------------------------------*/
