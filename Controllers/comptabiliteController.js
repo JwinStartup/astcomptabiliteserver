@@ -178,15 +178,15 @@ const cloturerBilan= async (req, res, next) => {
     console.log(req.body)
 }
 const partager= async (req, res, next) => {
-    console.log('body:',req.body)
-  try {
+    console.log(req.body)
+/*  try {
         // Get details about the asset
      const result = await cloudinary.api.resource(req.body)
         console.log(result);
         return result;
         } catch (error) {
         console.error(error);
-    }
+    }*/
 }
 
 const listeBilan= async (req, res, next) => {
