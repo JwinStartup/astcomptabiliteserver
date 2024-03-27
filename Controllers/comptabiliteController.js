@@ -179,14 +179,34 @@ const cloturerBilan= async (req, res, next) => {
 }
 const partager= async (req, res, next) => {
     console.log(req.body.url)
-/*  try {
-        // Get details about the asset
-     const result = await cloudinary.api.resource(req.body)
-        console.log(result);
-        return result;
+      try {
+    let url = "https://graph.facebook.com/v18.0/250250498176635/messages";
+
+let payload = {
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": "+2250500908420",
+      "type": "document",
+      "document": { // the text object
+        "link": `${req.body.url}`,
+        "filename":`${req.body.filename}`
+        }
+        };
+
+let  headers = {
+                'Authorization': 'Bearer EAAENJVQnPZCsBO2GycJhIEw6K4uNJSZBCVl3ZBYEqmuPmbU8CmAVT48Hoz7HwMnbUCgK2v8uOLaTXOKSOCsmyXnADlk1n7BnSn4ZBZAOIhjvxpXGGP7j09TxUjmoGm4Dx6PkVHoO1dh0hEW8ArMc5lKvYZBVdJpWG6zpysX0svbz7fL6ZC9SgZBndJkHRR225ohkewCm9ylKF0BUEHhHZAkdS',
+                'Content-Type': 'application/json'
+               };
+
+  axios.post(url, payload, {
+    headers: headers
+  })
+  .then(function (response) {
+    console.log(response);
+  })
         } catch (error) {
         console.error(error);
-    }*/
+    }
 }
 
 const listeBilan= async (req, res, next) => {
