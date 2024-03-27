@@ -4,7 +4,12 @@ const Commission = require("../models/commission.js");
 const Bilan = require("../models/bilan.js");
 const Charge = require("../models/charge.js");
 const moment = require("moment")
-
+import {v2 as cloudinary} from 'cloudinary';
+cloudinary.config({ 
+  cloud_name: 'cfcunadoc', 
+  api_key: '121279647952858', 
+  api_secret: 'PcZT5j4OaEyZjtUbZsC3iVCksO8' 
+});
 const periode=`${moment(new Date()).locale('fr').format("MMM")}  ${moment(new Date()).locale('fr').format("YYYY")}`
  
     /* ----------------------- facture ---------------------------------*/
@@ -173,7 +178,15 @@ const cloturerBilan= async (req, res, next) => {
     console.log(req.body)
 }
 const partager= async (req, res, next) => {
-    console.log('params',req.body)
+    console.log('body:',req.body)
+  try {
+        // Get details about the asset
+     const result = await cloudinary.api.resource(req.body)
+        console.log(result);
+        return result;
+        } catch (error) {
+        console.error(error);
+    }
 }
 
 const listeBilan= async (req, res, next) => {
