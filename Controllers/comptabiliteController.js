@@ -197,7 +197,7 @@ let  headers = {
     headers: headers
   })
   .then(function (response) {
-    console.log(response);
+    res.status(200).json({message:'succes'})
   })
         } catch (error) {
         console.error(error);
