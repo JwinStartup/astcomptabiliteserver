@@ -173,7 +173,7 @@ const cloturerBilan= async (req, res, next) => {
     console.log(req.body)
 }
 const partager= async (req, res, next) => {
-    console.log('params',req.params)
+    console.log('params',req.body)
 }
 
 const listeBilan= async (req, res, next) => {
