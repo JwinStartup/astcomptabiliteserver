@@ -4,7 +4,7 @@ const Commission = require("../models/commission.js");
 const Bilan = require("../models/bilan.js");
 const Charge = require("../models/charge.js");
 const moment = require("moment")
-import {v2 as cloudinary} from 'cloudinary';
+const cloudinary = require('cloudinary').v2
 cloudinary.config({ 
   cloud_name: 'cfcunadoc', 
   api_key: '121279647952858', 
