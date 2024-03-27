@@ -172,6 +172,9 @@ const creerCharge= async (req, res, next) => {
 const cloturerBilan= async (req, res, next) => {
     console.log(req.body)
 }
+const partager= async (req, res, next) => {
+    console.log(req.params.url)
+}
 
 const listeBilan= async (req, res, next) => {
    try {
@@ -183,6 +186,7 @@ const listeBilan= async (req, res, next) => {
 }
 module.exports = { 
     creerFacture,
+    partager,
     modifieFacture,
     payerFacture,
     supprimerFacture,
