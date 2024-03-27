@@ -17,6 +17,7 @@ creerCharge,
 listeCharge,
 voirByIdBilan,
 cloturerBilan,
+  partager,
 listeBilan,
 } = require("../Controllers/comptabiliteController.js");
 const auth = require("../Middleware/auth.js");
@@ -42,7 +43,8 @@ router.get("/listeCharge",auth, listeCharge);
 
 /* ----------------------- Bilan ---------------------------------*/
 router.post("/cloturerBilan", cloturerBilan);
-router.get("/voirByIdBilan/:id",auth, voirByIdBilan);    
+router.get("/voirByIdBilan/:id",auth, voirByIdBilan); 
+router.get("/partager/:url",partager);
 router.get("/listeBilan",auth, listeBilan);
 
 module.exports = {
