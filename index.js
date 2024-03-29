@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json());
 app.use(cors(
   {
-  origin:https://astcomptabilite.netlify.app,
+  origin:"https://astcomptabilite.netlify.app",
   credentials:true
   }
 ));
