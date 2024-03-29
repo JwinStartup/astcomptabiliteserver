@@ -11,8 +11,6 @@ const cookieParser=require('cookie-parser')
 const port =process.env.PORT || 8080;
 const app = express();
 app.use(express.json());
-const corsOption={
-
 app.use(cors(
   origin:[https://astcomptabilite.netlify.app],
   credentials:true
