@@ -12,14 +12,15 @@ const port =process.env.PORT || 8080;
 const app = express();
 app.use(express.json());
 const corsOption={
-  origin:true,
+
+app.use(cors(
+  origin:[https://astcomptabilite.netlify.app],
   credentials:true
-}
-app.use(cors(corsOption));
+));
 app.use(cookieParser())
 app.use(bodyParser.json());
 app.use((req, res, next) => {
- //res.setHeader("Access-Control-Allow-Origin", "*");
+
   res.setHeader("Access-Control-Allow-Methods", "POST,GET,OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
   if (req.method === "OPTIONS") {
