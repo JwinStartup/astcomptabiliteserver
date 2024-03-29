@@ -12,8 +12,10 @@ const port =process.env.PORT || 8080;
 const app = express();
 app.use(express.json());
 app.use(cors(
-  origin:[https://astcomptabilite.netlify.app],
+  {
+  origin:https://astcomptabilite.netlify.app,
   credentials:true
+  }
 ));
 app.use(cookieParser())
 app.use(bodyParser.json());
