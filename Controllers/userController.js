@@ -131,7 +131,7 @@ const connexion = async (req, res, next) => {
         expiresIn: "1d",
       }
     );
-    res.cookie('jwt', token,{sameSite: "none",secure: "true",maxAge: new Date(Date.now() + (3600 * 1000 * 24 * 180 * 1))})
+    res.cookie('jwt', token,{sameSite:"none",secure:"true",maxAge:new Date(Date.now() + (3600 * 1000 * 24 * 180 * 1))})
     res.status(200).json({ user:user})
   } catch (error) {
     res.status(404).json(error);
