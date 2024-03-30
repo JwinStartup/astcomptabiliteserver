@@ -114,8 +114,8 @@ const lister = async (req, res, next) => {
 const connexion = async (req, res, next) => {
   try {
     const maxAge= 24*60*60
-    const user = await User.findOne({ nom: req.body.nom }).select('-password  -_id');
-
+    const user = await User.findOne({ nom: req.body.nom },{_id:0 , password:0} );
+    console.log(user)
     if (!user) {
       res.status(400).json({message:"nom existe déja"});
     }
