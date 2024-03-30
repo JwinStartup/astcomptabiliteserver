@@ -114,8 +114,7 @@ const lister = async (req, res, next) => {
 const connexion = async (req, res, next) => {
   try {
     const maxAge= 24*60*60
-    const user = await User.findOne({ nom: req.body.nom },{_id:0 , password:0} );
-    console.log(user)
+    const user = await User.findOne({ nom: req.body.nom });
     if (!user) {
       res.status(400).json({message:"nom existe déja"});
     }
@@ -132,7 +131,14 @@ const connexion = async (req, res, next) => {
       }
     );
     res.cookie('jwt', token,{sameSite:"none",secure:"true",maxAge:new Date(Date.now() + (3600 * 1000 * 24 * 180 * 1))})
-    res.status(200).json({ user:user})
+    res.status(200).json({
+      user:{
+        nom: user.nom,
+        email: user.email,
+        role:user.role,
+        cel:user.cel,
+           }
+    })
   } catch (error) {
     res.status(404).json(error);
   }
