@@ -18,7 +18,6 @@ const inscriptionParent= async (req, res, next) => {
         ville: req.body.ville,
         commune: req.body.commune,
         nombreEnfant: req.body.nombreEnfant,
-        eleveClasse: req.body.eleveClasse,
         quartier: req.body.quartier,
         creerPar:req.user
       }
