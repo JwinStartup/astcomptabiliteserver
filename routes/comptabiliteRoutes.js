@@ -16,7 +16,7 @@ listeComission,
 creerCharge,
 listeCharge,
 voirByIdBilan,
-cloturerBilan,
+cloturer,
   partager,
 listeBilan,
 } = require("../Controllers/comptabiliteController.js");
@@ -42,7 +42,7 @@ router.post("/creerCharge",auth, creerCharge);
 router.get("/listeCharge",auth, listeCharge); 
 
 /* ----------------------- Bilan ---------------------------------*/
-router.post("/cloturerBilan", cloturerBilan);
+router.post("/cloturer", cloturer);
 router.get("/voirByIdBilan/:id",auth, voirByIdBilan); 
 router.post("/partager",partager);
 router.get("/listeBilan",auth, listeBilan);
