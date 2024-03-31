@@ -26,9 +26,6 @@ var parentSchema = new Schema({
   nombreEnfant: {
     type: String,
   },
-  eleveClasse: {
-    type: String,
-  },
   creerPar:{
     type:Schema.Types.ObjectId,
  ref:'User'
