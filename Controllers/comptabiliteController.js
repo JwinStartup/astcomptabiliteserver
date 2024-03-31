@@ -170,7 +170,14 @@ const creerCharge= async (req, res, next) => {
 }
 
 const cloturerBilan= async (req, res, next) => {
-    console.log(req.body)
+     try{
+   const bilanPeriode= await Bilan.findById(req.body.id)
+   bilanPeriode.resultat=req.body.resultat
+   bilanPeriode.statut='cloturé'
+   await  bilanPeriode.save().then((doc)=>res.status(200).json(doc))
+            }catch(error){
+             console.log(error)
+            }
 }
 const partager= async (req, res, next) => {
     console.log(req.body.url)
