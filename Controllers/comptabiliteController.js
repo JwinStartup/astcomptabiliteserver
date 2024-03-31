@@ -169,7 +169,7 @@ const creerCharge= async (req, res, next) => {
             }
 }
 
-const cloturerBilan= async (req, res, next) => {
+const cloturer= async (req, res, next) => {
      try{
    const bilanPeriode= await Bilan.findById(req.body.id)
    bilanPeriode.resultat=req.body.resultat
@@ -233,6 +233,6 @@ module.exports = {
     creerCharge,
     listeCharge,
     voirByIdBilan,
-    cloturerBilan,
+    cloturer,
     listeBilan
 };
