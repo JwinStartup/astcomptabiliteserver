@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Parent = require("../models/parent.js");
 const Personnel = require("../models/personnel.js");
-
+const Enfant = require("../models/enfant.js");
 
 
 const inscriptionParent= async (req, res, next) => {
@@ -20,6 +20,31 @@ const inscriptionParent= async (req, res, next) => {
         nombreEnfant: req.body.nombreEnfant,
         eleveClasse: req.body.eleveClasse,
         quartier: req.body.quartier,
+        creerPar:req.user
+      }
+    )
+      .save()
+      .then((doc) =>
+        res.json(doc)
+      );
+  } catch (error) {
+    res.json({message:error});
+  }
+}
+const inscriptionEnfant= async (req, res, next) => {
+  try {
+    const enfant = await new Enfant(
+      {
+        nom: req.body.nom,
+        prenoms: req.body.prenoms,
+        cel: req.body.cel,
+        ville: req.body.ville,
+        commune: req.body.commune,
+        nombreEnfant: req.body.nombreEnfant,
+        classe: req.body.classe,
+        quartier: req.body.quartier,
+        formateur: req.body.formateur,
+        parent: req.body.parent,
         creerPar:req.user
       }
     )
@@ -58,6 +83,15 @@ const inscriptionPersonnel= async (req, res, next) => {
 const listeParent= async (req, res, next) => {
   try{
   const liste= await Parent.find({creerPar:req.user})
+  res.status(200).json(liste)
+  }catch(error){
+     res.json({message:error});
+
+  }
+}
+const listeEnfant= async (req, res, next) => {
+  try{
+  const liste= await Enfant.find({creerPar:req.user})
   res.status(200).json(liste)
   }catch(error){
      res.json({message:error});
@@ -167,4 +201,4 @@ const deconnexion = async (req, res, next) => {
 };
 
 
-module.exports = { inscription, connexion ,deconnexion, modifierRole, lister ,supprime,inscriptionParent,inscriptionPersonnel,listeParent,listePersonnel};
+module.exports = { inscription,listeEnfant,inscriptionEnfant, connexion ,deconnexion, modifierRole, lister ,supprime,inscriptionParent,inscriptionPersonnel,listeParent,listePersonnel};
