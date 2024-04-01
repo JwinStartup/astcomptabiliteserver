@@ -293,6 +293,16 @@ const supprimeParent = async (req, res, next) => {
   } catch (error) {
   }
 };
+const supprimeEnfant = async (req, res, next) => {
+  try {
+    const moi = await Parent.findByIdAndDelete(req.params.id);
+     await moi.save()
+      .then((doc) =>
+        res.json(doc)
+      )
+  } catch (error) {
+  }
+};
 const supprimePersonnel = async (req, res, next) => {
   try {
     const moi = await Personnel.findByIdAndDelete(req.params.id);
@@ -322,7 +332,6 @@ module.exports = {
   modifierEnfant,
   connexion ,
   deconnexion,
- 
   lister ,
   voir,
   modifier,
@@ -332,6 +341,7 @@ module.exports = {
   supprime,
   supprimePersonnel,
   supprimeParent,
+  supprimeEnfant,
   inscriptionParent,
   inscriptionPersonnel,
   listeParent,
