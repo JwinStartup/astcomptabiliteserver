@@ -16,22 +16,43 @@ const {
   deconnexion,
   modifierRole,
   lister,
+  supprimerPersonnel,
+  supprimerParent,
+  supprimerEnfant,
+  voirPersonnel,
+  voirParent,
+  voirEnfant,
+  voir,
+  modifierPersonnel,
+  modifierParent,
+  modifierEnfant,
   supprime,
 } = require("../Controllers/userController.js");
 const auth = require("../Middleware/auth.js");
 
 router.post("/inscription", inscription);
+router.post("/modifier", modifier);
 router.post("/inscriptionParent",auth, inscriptionParent);
 router.post("/inscriptionEnfant",auth, inscriptionEnfant);
 router.post("/inscriptionPersonnel",auth, inscriptionPersonnel);
 router.get("/listeParent",auth,listeParent);
 router.get("/listePersonnel",auth, listePersonnel);
 router.get("/listeEnfant",auth, listeEnfant);
+router.get("/supprimerEnfant/:id",auth, supprimerEnfant);
+router.get("/supprimerPersonnel/:id",auth, supprimerPersonnel);
+router.get("/supprimerParent/:id",auth, supprimerParent);
+router.post("/modifierEnfant,auth modifierEnfant);
+router.post("/modifierPersonnel,auth modifierPersonnel);
+router.post("/modifierParent,auth modifierParent);
+router.get("/voirEnfant/:id",auth, voirEnfant);
+router.get("/voirPersonnel/:id",auth, voirPersonnel);
+router.get("/voirParent/:id",auth, voirParent);
+router.get("/voir/:id",auth, voir);
 //router.get("/lister", lister);
 router.post("/connexion", connexion);
 router.get("/deconnexion", deconnexion);
 //router.post("/modifierRole", modifierRole);
-//router.get("/supprime/:id", supprime);
+router.get("/supprime/:id", supprime);
 
 module.exports = {
   routes: router,
