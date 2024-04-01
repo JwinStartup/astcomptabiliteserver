@@ -26,7 +26,7 @@ const {
   modifierPersonnel,
   modifierParent,
   modifierEnfant,
-  supprime,
+  supprimer,
 } = require("../Controllers/userController.js");
 const auth = require("../Middleware/auth.js");
 
@@ -52,7 +52,7 @@ router.get("/voir/:id",auth, voir);
 router.post("/connexion", connexion);
 router.get("/deconnexion", deconnexion);
 
-router.get("/supprime/:id", supprime);
+router.get("/supprimer/:id", supprime);
 
 module.exports = {
   routes: router,
