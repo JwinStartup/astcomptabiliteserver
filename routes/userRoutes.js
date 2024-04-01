@@ -16,6 +16,7 @@ const {
   deconnexion,
   modifierRole,
   lister,
+  modifier,
   supprimerPersonnel,
   supprimerParent,
   supprimerEnfant,
