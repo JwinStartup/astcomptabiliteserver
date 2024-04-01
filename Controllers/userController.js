@@ -32,6 +32,7 @@ const inscriptionParent= async (req, res, next) => {
 }
 const inscriptionEnfant= async (req, res, next) => {
   try {
+    console.log(req.body)
     const enfant = await new Enfant(
       {
         nom: req.body.nom,
