@@ -195,7 +195,10 @@ const modifierEnfant = async (req, res, next) => {
         formateur: req.body.formateur,
         parent: req.body.parent,
     });
-    await moi.save((doc)=>res.json(doc))
+    await moi.save()
+      .then((doc) =>
+        res.json(doc)
+      )
   } catch (error) {
   }
 };
@@ -213,7 +216,10 @@ const modifierParent = async (req, res, next) => {
         formateur: req.body.formateur,
         parent: req.body.parent,
     });
-    await moi.save((doc)=>res.json(doc))
+    await moi.save()
+      .then((doc) =>
+        res.json(doc)
+      )
   } catch (error) {
   }
 };
@@ -229,30 +235,69 @@ const modifierPersonnel = async (req, res, next) => {
         commune: req.body.commune,
         discipline: req.body.discipline,
     });
-    await moi.save((doc)=>res.json(doc))
+    await moi.save()
+      .then((doc) =>
+        res.json(doc)
+      )
   } catch (error) {
   }
 };
 const supprime = async (req, res, next) => {
   try {
     const moi = await User.findByIdAndDelete(req.params.id);
-     await moi.save((doc)=>res.json(doc))
+     await moi.save()
+      .then((doc) =>
+        res.json(doc)
+      )
     
+  } catch (error) {
+  }
+};
+const voir = async (req, res, next) => {
+  try {
+    const moi = await User.findById(req.body.id);
+        res.json(moi)
+  } catch (error) {
+  }
+};
+const voirParent = async (req, res, next) => {
+  try {
+    const moi = await Parent.findById(req.body.id);
+        res.json(moi)
+  } catch (error) {
+  }
+};
+const voirPersonnel = async (req, res, next) => {
+  try {
+    const moi = await Personnel.findById(req.body.id);
+        res.json(moi)
+  } catch (error) {
+  }
+};
+const voirEnfant = async (req, res, next) => {
+  try {
+    const moi = await Enfant.findById(req.body.id);
+        res.json(moi)
   } catch (error) {
   }
 };
 const supprimeParent = async (req, res, next) => {
   try {
     const moi = await Parent.findByIdAndDelete(req.params.id);
-     await moi.save((doc)=>res.json(doc))
-    
+     await moi.save()
+      .then((doc) =>
+        res.json(doc)
+      )
   } catch (error) {
   }
 };
 const supprimePersonnel = async (req, res, next) => {
   try {
     const moi = await Personnel.findByIdAndDelete(req.params.id);
-     await moi.save((doc)=>res.json(doc))
+     await moi.save()
+      .then((doc) =>
+        res.json(doc)
+      )
     
   } catch (error) {
   }
@@ -277,6 +322,10 @@ module.exports = {
   deconnexion,
   modifierRole,
   lister ,
+  voir,
+  voirParent,
+  voirEnfant,
+  voirPersonnel,
   supprime,
   supprimePersonnel,
   supprimeParent,
