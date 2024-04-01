@@ -32,7 +32,6 @@ app.use((req, res, next) => {
 
 app.use("/api/users", users.routes);
 app.use("/api/comptabilites", comptabilite.routes);
-//app.use("/api/preinscription", preinscription.routes);
 
 app.listen(port, () =>
   console.log(`l'application  a été lancée sur url http://localhost:` + port)
