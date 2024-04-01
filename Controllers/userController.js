@@ -40,9 +40,7 @@ const inscriptionEnfant= async (req, res, next) => {
         cel: req.body.cel,
         ville: req.body.ville,
         commune: req.body.commune,
-        nombreEnfant: req.body.nombreEnfant,
         classe: req.body.classe,
-        quartier: req.body.quartier,
         formateur: req.body.formateur,
         parent: req.body.parent,
         creerPar:req.user
@@ -185,10 +183,77 @@ const modifierRole = async (req, res, next) => {
   } catch (error) {
   }
 };
+const modifierEnfant = async (req, res, next) => {
+  try {
+    const moi = await Enfant.findByIdAndUpdate(req.body.id,{
+        nom: req.body.nom,
+        prenoms: req.body.prenoms,
+        cel: req.body.cel,
+        ville: req.body.ville,
+        commune: req.body.commune,
+        classe: req.body.classe,
+        formateur: req.body.formateur,
+        parent: req.body.parent,
+    });
+    await moi.save((doc)=>res.json(doc))
+  } catch (error) {
+  }
+};
+const modifierParent = async (req, res, next) => {
+  try {
+    const moi = await Parent.findByIdAndUpdate(req.body.id,{
+        nom: req.body.nom,
+        prenoms: req.body.prenoms,
+        cel: req.body.cel,
+        ville: req.body.ville,
+        commune: req.body.commune,
+        nombreEnfant: req.body.nombreEnfant,
+        classe: req.body.classe,
+        quartier: req.body.quartier,
+        formateur: req.body.formateur,
+        parent: req.body.parent,
+    });
+    await moi.save((doc)=>res.json(doc))
+  } catch (error) {
+  }
+};
+const modifierPersonnel = async (req, res, next) => {
+  try {
+    const moi = await Personnel.findByIdAndUpdate(req.body.id,{
+        nom: req.body.nom,
+        prenoms: req.body.prenoms,
+        cel: req.body.cel,
+        email: req.body.email,
+        whatshapp: req.body.whatshapp,
+        ville: req.body.ville,
+        commune: req.body.commune,
+        discipline: req.body.discipline,
+    });
+    await moi.save((doc)=>res.json(doc))
+  } catch (error) {
+  }
+};
 const supprime = async (req, res, next) => {
   try {
     const moi = await User.findByIdAndDelete(req.params.id);
-    res.json({message:"supprimé"});
+     await moi.save((doc)=>res.json(doc))
+    
+  } catch (error) {
+  }
+};
+const supprimeParent = async (req, res, next) => {
+  try {
+    const moi = await Parent.findByIdAndDelete(req.params.id);
+     await moi.save((doc)=>res.json(doc))
+    
+  } catch (error) {
+  }
+};
+const supprimePersonnel = async (req, res, next) => {
+  try {
+    const moi = await Personnel.findByIdAndDelete(req.params.id);
+     await moi.save((doc)=>res.json(doc))
+    
   } catch (error) {
   }
 };
@@ -201,4 +266,21 @@ const deconnexion = async (req, res, next) => {
 };
 
 
-module.exports = { inscription,listeEnfant,inscriptionEnfant, connexion ,deconnexion, modifierRole, lister ,supprime,inscriptionParent,inscriptionPersonnel,listeParent,listePersonnel};
+module.exports = { 
+  inscription,
+  listeEnfant,
+  inscriptionEnfant,
+  modifierPersonnel,
+  modifierParent,
+  modifierEnfant,
+  connexion ,
+  deconnexion,
+  modifierRole,
+  lister ,
+  supprime,
+  supprimePersonnel,
+  supprimeParent,
+  inscriptionParent,
+  inscriptionPersonnel,
+  listeParent,
+  listePersonnel};
