@@ -52,7 +52,7 @@ router.get("/voir/:id",auth, voir);
 router.post("/connexion", connexion);
 router.get("/deconnexion", deconnexion);
 
-router.get("/supprimer/:id", supprime);
+router.get("/supprimer/:id", supprimer);
 
 module.exports = {
   routes: router,
