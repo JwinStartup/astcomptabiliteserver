@@ -11,6 +11,9 @@ var enfantSchema = new Schema({
   ville: {
     type: String,
   },
+  cel: {
+    type: String,
+  },
   commune: {
     type: String,
   },
