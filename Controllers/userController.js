@@ -298,7 +298,6 @@ const supprimerEnfant = async (req, res, next) => {
     console.log(req.params.id)
     const moi = await Enfant.findByIdAndDelete(req.params.id);
      await moi.save()
-    console.log("moi:",moi)
       .then((doc) =>
         res.json(doc)
       )
