@@ -14,7 +14,7 @@ const {
   listePersonnel,
   connexion,
   deconnexion,
-  modifierRole,
+ 
   lister,
   modifier,
   supprimerPersonnel,
@@ -52,7 +52,7 @@ router.get("/voir/:id",auth, voir);
 //router.get("/lister", lister);
 router.post("/connexion", connexion);
 router.get("/deconnexion", deconnexion);
-//router.post("/modifierRole", modifierRole);
+
 router.get("/supprime/:id", supprime);
 
 module.exports = {
