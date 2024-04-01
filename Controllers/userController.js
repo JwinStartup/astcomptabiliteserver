@@ -299,7 +299,7 @@ const supprimerEnfant = async (req, res, next) => {
     const moi = await Enfant.findByIdAndDelete(req.params.id);
      await moi.save()
       .then((doc) =>
-        res.json(doc)
+        res.json({message:'success'})
       )
   } catch (error) {
   }
