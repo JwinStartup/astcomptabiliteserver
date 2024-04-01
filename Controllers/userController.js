@@ -244,7 +244,7 @@ const modifierPersonnel = async (req, res, next) => {
   } catch (error) {
   }
 };
-const supprime = async (req, res, next) => {
+const supprimer = async (req, res, next) => {
   try {
     const moi = await User.findByIdAndDelete(req.params.id);
      await moi.save()
@@ -283,7 +283,7 @@ const voirEnfant = async (req, res, next) => {
   } catch (error) {
   }
 };
-const supprimeParent = async (req, res, next) => {
+const supprimerParent = async (req, res, next) => {
   try {
     const moi = await Parent.findByIdAndDelete(req.params.id);
      await moi.save()
@@ -293,7 +293,7 @@ const supprimeParent = async (req, res, next) => {
   } catch (error) {
   }
 };
-const supprimeEnfant = async (req, res, next) => {
+const supprimerEnfant = async (req, res, next) => {
   try {
     const moi = await Parent.findByIdAndDelete(req.params.id);
      await moi.save()
@@ -303,7 +303,7 @@ const supprimeEnfant = async (req, res, next) => {
   } catch (error) {
   }
 };
-const supprimePersonnel = async (req, res, next) => {
+const supprimerPersonnel = async (req, res, next) => {
   try {
     const moi = await Personnel.findByIdAndDelete(req.params.id);
      await moi.save()
@@ -338,10 +338,10 @@ module.exports = {
   voirParent,
   voirEnfant,
   voirPersonnel,
-  supprime,
-  supprimePersonnel,
-  supprimeParent,
-  supprimeEnfant,
+  supprimer,
+  supprimerPersonnel,
+  supprimerParent,
+  supprimerEnfant,
   inscriptionParent,
   inscriptionPersonnel,
   listeParent,
