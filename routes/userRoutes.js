@@ -14,7 +14,6 @@ const {
   listePersonnel,
   connexion,
   deconnexion,
- 
   lister,
   modifier,
   supprimerPersonnel,
