@@ -176,9 +176,11 @@ const connexion = async (req, res, next) => {
   }
 };
 
-const modifierRole = async (req, res, next) => {
+const modifier = async (req, res, next) => {
   try {
-    const moi = await User.findByIdAndUpdate(req.body.id,{role:req.body.role});
+    const moi = await User.findByIdAndUpdate(req.body.id,{
+        role:req.body.role,
+        cel:req.body.cel,});
     res.json({message:"modifie"});
   } catch (error) {
   }
@@ -320,9 +322,10 @@ module.exports = {
   modifierEnfant,
   connexion ,
   deconnexion,
-  modifierRole,
+ 
   lister ,
   voir,
+  modifier,
   voirParent,
   voirEnfant,
   voirPersonnel,
