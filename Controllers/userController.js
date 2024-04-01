@@ -91,7 +91,7 @@ const listeParent= async (req, res, next) => {
 }
 const listeEnfant= async (req, res, next) => {
   try{
-  const liste= await Enfant.find({creerPar:req.user})
+  const liste= await Enfant.find({creerPar:req.user}).populate('formateur parent')
   res.status(200).json(liste)
   }catch(error){
      res.json({message:error});
