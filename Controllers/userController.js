@@ -295,10 +295,12 @@ const supprimerParent = async (req, res, next) => {
 const supprimerEnfant = async (req, res, next) => {
   try {
     console.log(req.params.id)
-    const moi = await Enfant.findByIdAndDelete(req.params.id).save()
-      .then((doc) =>
-        res.json(doc)
-      );
+    const moi = await Enfant.findById(req.params.id)
+    console.log(moi)
+   // const moi = await Enfant.findByIdAndDelete(req.params.id).save()
+    //  .then((doc) =>
+    //    res.json(doc)
+    //  );
       
   } catch (error) {
   }
