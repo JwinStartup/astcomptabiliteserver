@@ -295,8 +295,8 @@ const supprimerParent = async (req, res, next) => {
 const supprimerEnfant = async (req, res, next) => {
   try {
     console.log(req.params.id)
-    const moi = await Enfant.findById(req.params.id)
-    console.log(moi)
+     await Enfant.deleteOne({_id:req.params.id})
+    console.log(Enfant)
    // const moi = await Enfant.findByIdAndDelete(req.params.id).save()
     //  .then((doc) =>
     //    res.json(doc)
