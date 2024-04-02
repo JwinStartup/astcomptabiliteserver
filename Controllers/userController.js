@@ -285,10 +285,8 @@ const voirEnfant = async (req, res, next) => {
 };
 const supprimerParent = async (req, res, next) => {
   try {
-    const moi = await Parent.findByIdAndDelete(req.params.id).save()
-      .then((doc) =>
-        res.json(doc)
-      );
+    const moi = await Parent.deleteOne({_id:req.params.id})
+    res.json("success")
   } catch (error) {
   }
 };
@@ -307,13 +305,8 @@ const supprimerEnfant = async (req, res, next) => {
 };
 const supprimerPersonnel = async (req, res, next) => {
   try {
-    const moi = await Personnel.findByIdAndDelete(req.params.id).save()
-      .then((doc) =>
-        res.json(doc)
-      );
-  
-     
-    
+    const moi = await Personnel.deleteOne({_id:req.params.id})
+    res.json("success")
   } catch (error) {
   }
 };
