@@ -25,7 +25,7 @@ const auth = require("../Middleware/auth.js");
 /* ----------------------- facture ---------------------------------*/
 router.post("/creerFacture",auth, creerFacture);
 router.get("/listeFacture",auth, listeFacture);
-router.post("/modifieFacture", modifieFacture);
+router.post("/modifieFacture",auth, modifieFacture);
 router.post("/payerFacture",auth, payerFacture);
 router.get("/supprimerFacture/:id",auth, supprimerFacture);
 router.get("/voirByIdFacture/:id", voirByIdFacture);
