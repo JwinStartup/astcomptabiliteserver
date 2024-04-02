@@ -27,7 +27,7 @@ router.post("/creerFacture",auth, creerFacture);
 router.get("/listeFacture",auth, listeFacture);
 router.post("/modifieFacture", modifieFacture);
 router.post("/payerFacture",auth, payerFacture);
-router.get("/supprimerFacture/id",auth, supprimerFacture);
+router.get("/supprimerFacture/:id",auth, supprimerFacture);
 router.get("/voirByIdFacture/:id", voirByIdFacture);
 
 /* ----------------------- reçues ---------------------------------*/
