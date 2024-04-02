@@ -50,7 +50,7 @@ const listeFacture= async (req, res, next) => {
         res.json({message:error});
     }
 }
-const modifieFacture= async (req, res, next) => {
+const modifierFacture= async (req, res, next) => {
 try{    
  console.log(req.body)
  const update= {
@@ -235,7 +235,7 @@ const listeBilan= async (req, res, next) => {
 module.exports = { 
     creerFacture,
     partager,
-    modifieFacture,
+    modifierFacture,
     payerFacture,
     supprimerFacture,
     voirByIdFacture,
