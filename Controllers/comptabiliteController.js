@@ -51,7 +51,18 @@ const listeFacture= async (req, res, next) => {
     }
 }
 const modifieFacture= async (req, res, next) => {
-    console.log(req.body)
+ 
+try{    console.log(req.body)
+ const filter = { _id: req.body._id }
+ const update= {
+                    montant: req.body.montant,
+                    periodeAjouter:req.body.periodeAjouter,
+                    client: req.body.client,
+               }
+    const facture = await Facture.findOneAndUpdate(filter, update).then(()=>res.json({message:'success'}))
+  }catch(error){
+        console.log(error)
+    }
 }
 const payerFacture= async (req, res, next) => {
     console.log(req.body)
