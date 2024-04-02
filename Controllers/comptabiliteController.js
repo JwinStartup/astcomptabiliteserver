@@ -87,7 +87,10 @@ const payerFacture= async (req, res, next) => {
     }
 }
 const supprimerFacture= async (req, res, next) => {
-    console.log(req.params)
+    console.log(req.params.id)
+    await Facture.deleteOne({_id:req.params.id})
+    res.json("success")
+
 }
 const voirByIdFacture= async (req, res, next) => {
     console.log(req.params)
