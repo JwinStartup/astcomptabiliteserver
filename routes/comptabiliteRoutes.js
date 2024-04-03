@@ -16,6 +16,8 @@ listeComission,
 creerCharge,
 listeCharge,
 voirByIdBilan,
+  modifierCharge,
+  supprimerCharge,
 cloturer,
   partager,
 listeBilan,
@@ -40,6 +42,8 @@ router.get("/listeComission",auth, listeComission);
 /* ----------------------- Charges ---------------------------------*/
 router.post("/creerCharge",auth, creerCharge);
 router.get("/listeCharge",auth, listeCharge); 
+router.post("/modifierCharge",auth, modifierCharge);
+router.get("/supprimerCharge/:id",auth, supprimerCharge); 
 
 /* ----------------------- Bilan ---------------------------------*/
 router.post("/cloturer", cloturer);
