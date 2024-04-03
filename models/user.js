@@ -5,6 +5,9 @@ var userSchema = new Schema({
   nom: {
     type: String,
   },
+  zone: {
+    type: String,
+  },
   email: {
     type: String,
   },
