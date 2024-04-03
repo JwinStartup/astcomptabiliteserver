@@ -56,7 +56,6 @@ try{
  const update= {
                     montant: req.body.montant,
                     periodeAjouter:req.body.periodeAjouter,
-                    client: req.body.client,
                }
     const facture = await Facture.findByIdAndUpdate(req.body._id, update).then(()=>res.json({message:'success'}))
   }catch(error){
