@@ -214,10 +214,7 @@ const modifierParent = async (req, res, next) => {
         ville: req.body.ville,
         commune: req.body.commune,
         nombreEnfant: req.body.nombreEnfant,
-        classe: req.body.classe,
         quartier: req.body.quartier,
-        formateur: req.body.formateur,
-        parent: req.body.parent,
     });
     await moi.save()
       .then((doc) =>
