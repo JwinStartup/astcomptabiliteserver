@@ -30,7 +30,7 @@ const {
 } = require("../Controllers/userController.js");
 const auth = require("../Middleware/auth.js");
 
-router.post("/inscription",auth inscription);
+router.post("/inscription",auth, inscription);
 router.post("/modifier",auth, modifier);
 router.post("/inscriptionParent",auth, inscriptionParent);
 router.post("/inscriptionEnfant",auth, inscriptionEnfant);
