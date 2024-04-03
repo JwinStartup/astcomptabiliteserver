@@ -121,6 +121,7 @@ const inscription = async (req, res, next) => {
       const user = await new User({
         nom: req.body.nom,
         email: req.body.email,
+          zone:req.body.zone,
         role:req.body.role,
         cel:req.body.cel,
         password: hashedpassword,
