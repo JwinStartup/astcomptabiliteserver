@@ -207,6 +207,7 @@ const modifierEnfant = async (req, res, next) => {
 };
 const modifierParent = async (req, res, next) => {
   try {
+    console.log(req.body)
     const moi = await Parent.findByIdAndUpdate(req.body.id,{
         nom: req.body.nom,
         prenoms: req.body.prenoms,
