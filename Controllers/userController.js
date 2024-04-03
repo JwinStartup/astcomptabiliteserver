@@ -181,8 +181,9 @@ const modifier = async (req, res, next) => {
   try {
     const moi = await User.findByIdAndUpdate(req.body._id,{
         role:req.body.role,
+        zone:req.body.zone,
         cel:req.body.cel,});
-    res.json({message:"modifie"});
+    res.json(moi);
   } catch (error) {
   }
 };
