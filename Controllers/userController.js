@@ -264,7 +264,7 @@ const voir = async (req, res, next) => {
 };
 const voirParent = async (req, res, next) => {
   try {
-    const moi = await Parent.findById(req.body.id);
+    const moi = await Parent.findById(req.params.id);
         res.json(moi)
   } catch (error) {
   }
