@@ -14,6 +14,9 @@ var parentSchema = new Schema({
   whatshapp: {
     type: String,
   },
+  cel: {
+    type: String,
+  },
   ville: {
     type: String,
   },
