@@ -248,9 +248,7 @@ const modifierPersonnel = async (req, res, next) => {
 const supprimer = async (req, res, next) => {
   try {
     console.log(req..params.id)
-    const moi = await User.findByIdAndDelete(req.params.id);
-     await moi.save()
-      .then((doc) =>
+    const moi = await User.findByIdAndDelete(req.params.id).then((doc) =>
         res.json(doc)
       )
     
