@@ -154,6 +154,32 @@ const creerCharge= async (req, res, next) => {
             res.json({message:error});
             
         }}
+        const modifierCharge= async (req, res, next) => {
+            try{    
+                console.log(req.body)
+                const update= {
+                observation: req.body.observation,
+                periode: periode,
+                periodeAjouter: req.body.periodeAjouter,
+                type: req.body.type,
+                nomCharge: req.body.nomCharge,
+                personnel: req.body.personnel,
+                montant: req.body.montant
+               }
+           const charge = await Charge.findByIdAndUpdate(req.body._id, update).then(()=>res.json({message:'success'}))
+        }catch(error){
+        console.log(error)
+         }
+        }
+        const supprimerCharge= async (req, res, next) => {
+            try {
+                  console.log(req.params.id)
+                  await Charge.deleteOne({_id:req.params.id}).then(()=>
+                     res.status(200)json("success") )
+            } catch (error) {
+                res.json({message:error});
+            }
+        }
         const listeCharge= async (req, res, next) => {
             try {
                 const liste= await Charge.find({creerPar:req.user})
@@ -243,6 +269,8 @@ module.exports = {
     listeRecue,
     listeComission,
     creerCharge,
+    modifierCharge,
+    supprimerCharge,
     listeCharge,
     voirByIdBilan,
     cloturer,
