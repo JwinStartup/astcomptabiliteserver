@@ -179,7 +179,7 @@ const connexion = async (req, res, next) => {
 
 const modifier = async (req, res, next) => {
   try {
-    const moi = await User.findByIdAndUpdate(req.body.id,{
+    const moi = await User.findByIdAndUpdate(req.body._id,{
         role:req.body.role,
         cel:req.body.cel,});
     res.json({message:"modifie"});
@@ -188,7 +188,7 @@ const modifier = async (req, res, next) => {
 };
 const modifierEnfant = async (req, res, next) => {
   try {
-    const moi = await Enfant.findByIdAndUpdate(req.body.id,{
+    const moi = await Enfant.findByIdAndUpdate(req.body._id,{
         nom: req.body.nom,
         prenoms: req.body.prenoms,
         cel: req.body.cel,
@@ -208,7 +208,7 @@ const modifierEnfant = async (req, res, next) => {
 const modifierParent = async (req, res, next) => {
   try {
     console.log(req.body)
-    const moi = await Parent.findByIdAndUpdate(req.body.id,{
+    const moi = await Parent.findByIdAndUpdate(req.body._id,{
         nom: req.body.nom,
         prenoms: req.body.prenoms,
         cel: req.body.cel,
@@ -226,7 +226,7 @@ const modifierParent = async (req, res, next) => {
 };
 const modifierPersonnel = async (req, res, next) => {
   try {
-    const moi = await Personnel.findByIdAndUpdate(req.body.id,{
+    const moi = await Personnel.findByIdAndUpdate(req.body._id,{
         nom: req.body.nom,
         prenoms: req.body.prenoms,
         cel: req.body.cel,
