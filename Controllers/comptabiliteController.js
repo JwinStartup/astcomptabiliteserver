@@ -175,7 +175,7 @@ const creerCharge= async (req, res, next) => {
             try {
                   console.log(req.params.id)
                   await Charge.deleteOne({_id:req.params.id}).then(()=>
-                     res.status(200)json("success") )
+                     res.status(200).json("success") )
             } catch (error) {
                 res.json({message:error});
             }
