@@ -48,7 +48,7 @@ router.get("/voirEnfant/:id",auth, voirEnfant);
 router.get("/voirPersonnel/:id",auth, voirPersonnel);
 router.get("/voirParent/:id",auth, voirParent);
 router.get("/voir/:id",auth, voir);
-//router.get("/lister", lister);
+router.get("/liste",auth, lister);
 router.post("/connexion", connexion);
 router.get("/deconnexion", deconnexion);
 
