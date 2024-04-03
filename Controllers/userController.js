@@ -256,7 +256,7 @@ const supprimer = async (req, res, next) => {
 };
 const voir = async (req, res, next) => {
   try {
-    const moi = await User.findById(req.body.id);
+    const moi = await User.findById(req.params.id);
         res.json(moi)
   } catch (error) {
   }
@@ -270,14 +270,14 @@ const voirParent = async (req, res, next) => {
 };
 const voirPersonnel = async (req, res, next) => {
   try {
-    const moi = await Personnel.findById(req.body.id);
+    const moi = await Personnel.findById(req.params.id);
         res.json(moi)
   } catch (error) {
   }
 };
 const voirEnfant = async (req, res, next) => {
   try {
-    const moi = await Enfant.findById(req.body.id);
+    const moi = await Enfant.findById(req.params.id);
         res.json(moi)
   } catch (error) {
   }
