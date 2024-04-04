@@ -5,7 +5,6 @@ var commissionSchema = new Schema({
   montant: {
     type: Number,
   },
-
 periode: {
     type: String,
   },
@@ -15,10 +14,6 @@ periode: {
   creerPar:{
     type:Schema.Types.ObjectId,
  ref:'User'
-},
-  recue:{
-    type:Schema.Types.ObjectId,
- ref:'Recue'
 },
   client:{
     type:Schema.Types.ObjectId,
