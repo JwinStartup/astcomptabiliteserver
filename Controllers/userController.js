@@ -26,8 +26,8 @@ const inscriptionParent= async (req, res, next) => {
       }
     )
       .save()
-      .then((doc) =>
-        const commission = await new Commission({
+      .then(async (doc) =>
+          await new Commission({
                     montant:req.body.montantCours,
                     commission:req.body.commission,
                     creerPar: req.user,
