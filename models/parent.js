@@ -20,6 +20,9 @@ var parentSchema = new Schema({
   montantCours: {
     type: String,
   },
+  commission: {
+    type: String,
+  },
   ville: {
     type: String,
   },
