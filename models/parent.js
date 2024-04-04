@@ -17,6 +17,9 @@ var parentSchema = new Schema({
   cel: {
     type: String,
   },
+  montantCours: {
+    type: String,
+  },
   ville: {
     type: String,
   },
