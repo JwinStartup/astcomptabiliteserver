@@ -32,7 +32,7 @@ const inscriptionParent= async (req, res, next) => {
                     commission:req.body.commission,
                     creerPar: req.user,
                     client:doc._id,
-                }).save().then(()=>res.json(doc));
+                }).save().then(()=>res.json(doc)))
       } catch (error) {
         res.json({message:error});
   }
