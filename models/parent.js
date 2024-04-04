@@ -18,10 +18,10 @@ var parentSchema = new Schema({
     type: String,
   },
   montantCours: {
-    type: String,
+    type: Number,
   },
   commission: {
-    type: String,
+    type: Number,
   },
   ville: {
     type: String,
