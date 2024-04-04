@@ -19,16 +19,22 @@ const inscriptionParent= async (req, res, next) => {
         ville: req.body.ville,
         commune: req.body.commune,
         nombreEnfant: req.body.nombreEnfant,
+        montantCours:req.body.montantCours,
         quartier: req.body.quartier,
+        commission:req.body.commission,
         creerPar:req.user
       }
     )
       .save()
       .then((doc) =>
-        res.json(doc)
-      );
-  } catch (error) {
-    res.json({message:error});
+        const commission = await new Commission({
+                    montant:req.body.montantCours,
+                    commission:req.body.commission,
+                    creerPar: req.user,
+                    client:doc._id,
+                }).save().then(()=>res.json(doc));
+      } catch (error) {
+        res.json({message:error});
   }
 }
 const inscriptionEnfant= async (req, res, next) => {
