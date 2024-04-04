@@ -1,4 +1,4 @@
-
+const Commission = require("../models/commission.js");
 const User = require("../models/user.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
