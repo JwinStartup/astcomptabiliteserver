@@ -82,7 +82,7 @@ const payerFacture= async (req, res, next) => {
             }).save().then(async(doc)=> {
                    facture.recue=dooc._id
                     await facture.save()
-                     }
+                     })
         
          
         res.status(200).json(facture)
