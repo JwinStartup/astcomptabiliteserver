@@ -80,6 +80,8 @@ const payerFacture= async (req, res, next) => {
                 creerPar: req.user,
                 client:doc.client
             }).save().then(async(doc)=>{
+            await facture.recue=doc._id
+             await facture.save()
                 const commission = await new Commission({
                     montant:(doc.montant * 10)/100,
                     periode:doc.periode,
