@@ -114,7 +114,9 @@ const listeRecue= async (req, res, next) => {
 const voirRecueByid= async (req, res, next) => {
 
  try {
+        console.log("params:",req.params.id)
         const liste= await Recue.findOne({facture:req.params.id}).populate("client facture")
+        console.log("la liste:",liste)
         res.status(200).json(liste)
     } catch (error) {
         res.json({message:error});
