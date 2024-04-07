@@ -116,8 +116,14 @@ const listeRecue= async (req, res, next) => {
         res.json({message:error});
     }
 }
-const voirByIdRecue= async (req, res, next) => {
-    console.log(req)
+const voirRecueByid= async (req, res, next) => {
+
+ try {
+        const liste= await Recue.findOne({facture:req.params.id}).populate("client facture")
+        res.status(200).json(liste)
+    } catch (error) {
+        res.json({message:error});
+    }
 }
 
 /* ----------------------- Commission ---------------------------------*/
@@ -265,7 +271,7 @@ module.exports = {
     supprimerFacture,
     voirByIdFacture,
     listeFacture,
-    voirByIdRecue,
+    voirRecueByid,
     listeRecue,
     listeComission,
     creerCharge,
