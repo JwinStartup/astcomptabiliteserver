@@ -69,29 +69,22 @@ const payerFacture= async (req, res, next) => {
         facture.type='paye'
         facture.modePaiement=req.body.mode
         facture.refPaiement=req.body.ref
-        facture.save().then(async(doc)=>{
-            const recue = await new Recue({
-                montant:doc.montant,
-                facture:doc._id,
-                periode:doc.periode,
-                periodeAjouter:doc.periodeAjouter,
-                modePaiement:doc.modePaiement,
-                refPaiement:doc.refPaiement,
+        facture.save()
+          const lerecue = await new Recue({
+                montant:facture.montant,
+                facture:facture._id,
+                periode:facture.periode,
+                periodeAjouter:facture.periodeAjouter,
+                modePaiement:facture.modePaiement,
+                refPaiement:facture.refPaiement,
                 creerPar: req.user,
-                client:doc.client
-            }).save().then(async(doc)=>{
-            await facture.recue=doc._id
-             await facture.save()
-                const commission = await new Commission({
-                    montant:(doc.montant * 10)/100,
-                    periode:doc.periode,
-                    periodeAjouter:doc.periodeAjouter,
-                    creerPar: req.user,
-                    client:doc.client,
-                    recue:doc._id
-                }).save()
-            })
-        })
+                client:facture.client
+            }).save().then(async(doc)=> {
+                   facture.recue=dooc._id
+                    await facture.save()
+                     }
+        
+         
         res.status(200).json(facture)
     }catch(error){
         console.log(error)
