@@ -80,7 +80,7 @@ const payerFacture= async (req, res, next) => {
                 creerPar: req.user,
                 client:facture.client
             }).save().then(async(doc)=> {
-                   facture.recue=dooc._id
+                   facture.recue=doc._id
                     await facture.save()
                      })
         
