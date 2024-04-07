@@ -10,7 +10,7 @@ payerFacture,
 supprimerFacture,
 voirByIdFacture,
 listeFacture,
-voirByIdRecue,
+voirRecueByid,
 listeRecue,
 listeComission,
 creerCharge,
@@ -33,7 +33,7 @@ router.get("/supprimerFacture/:id",auth, supprimerFacture);
 router.get("/voirByIdFacture/:id", voirByIdFacture);
 
 /* ----------------------- reçues ---------------------------------*/
-router.get("/voirByIdRecue/:id", voirByIdRecue);
+router.get("/voirRecueByid/:id", voirRecueByid);
 router.get("/listeRecue",auth, listeRecue);
 
 /* ----------------------- commissions ---------------------------------*/
