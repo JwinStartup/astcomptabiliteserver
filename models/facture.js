@@ -24,6 +24,10 @@ var factureSchema = new Schema({
     type:Schema.Types.ObjectId,
  ref:'User'
 },
+  recue:{
+    type:Schema.Types.ObjectId,
+ ref:'Recue'
+},
   client:{
     type:Schema.Types.ObjectId,
  ref:'Parent'
