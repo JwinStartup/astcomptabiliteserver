@@ -112,7 +112,6 @@ const listeRecue= async (req, res, next) => {
     }
 }
 const voirRecueByid= async (req, res, next) => {
-
  try {
         console.log("params:",req.params.id)
         const liste= await Recue.findOne({facture:req.params.id}).populate("client facture")
@@ -157,6 +156,15 @@ const creerCharge= async (req, res, next) => {
             res.json({message:error});
             
         }}
+const voirCharge= async (req, res, next) => {
+ try {
+        const liste= await Charge.findOne({_id:req.params.id})
+        console.log("la liste:",liste)
+        res.status(200).json(liste)
+    } catch (error) {
+        res.json({message:error});
+    }
+}
         const modifierCharge= async (req, res, next) => {
             try{    
                 console.log(req.body)
@@ -269,6 +277,7 @@ module.exports = {
     voirByIdFacture,
     listeFacture,
     voirRecueByid,
+    voirCharge,
     listeRecue,
     listeComission,
     creerCharge,
