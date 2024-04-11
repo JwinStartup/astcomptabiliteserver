@@ -289,6 +289,13 @@ const voirEnfant = async (req, res, next) => {
   } catch (error) {
   }
 };
+const voirUser = async (req, res, next) => {
+  try {
+    const moi = await User.findById(req.params.id);
+        res.json(moi)
+  } catch (error) {
+  }
+};
 const supprimerParent = async (req, res, next) => {
   try {
     const moi = await Parent.deleteOne({_id:req.params.id})
@@ -338,6 +345,7 @@ module.exports = {
   voir,
   modifier,
   voirParent,
+  voirUser,
   voirEnfant,
   voirPersonnel,
   supprimer,
