@@ -44,6 +44,7 @@ router.post("/creerCharge",auth, creerCharge);
 router.get("/listeCharge",auth, listeCharge); 
 router.post("/modifierCharge",auth, modifierCharge);
 router.get("/supprimerCharge/:id",auth, supprimerCharge); 
+router.get("/voirCharge/:id",auth, voirCharge); 
 
 /* ----------------------- Bilan ---------------------------------*/
 router.post("/cloturer", cloturer);
