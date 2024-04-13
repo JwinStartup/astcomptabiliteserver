@@ -180,7 +180,7 @@ const connexion = async (req, res, next) => {
            }
     })
   } catch (error) {
-    res.json(error);
+    new Error(error)
   }
 };
 
