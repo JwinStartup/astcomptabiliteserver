@@ -156,12 +156,12 @@ const connexion = async (req, res, next) => {
     const maxAge= 24*60*60
     const user = await User.findOne({ nom: req.body.nom });
     if (!user) {
-      res.status(400).json({message:"nom existe déja"});
+      throw new Error ({message:"nom existe déja"});
     }
 
     const estEgal = await bcrypt.compare(req.body.password, user.password);
     if (!estEgal) {
-      res.status(400).json({message:"Mot de passe incorrect"});
+      throw new Error ({message:"Mot de passe incorrect"});
     }
     const token = jwt.sign(
       { userID: user.id, email: user.email },
