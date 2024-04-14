@@ -66,10 +66,10 @@ const payerFacture= async (req, res, next) => {
     console.log(req.body)
     try{
          const facture = await Facture.findById(req.body.idFacture)
-        facture.type='paye'
-        facture.modePaiement=req.body.mode
-        facture.refPaiement=req.body.ref
-        facture.save()
+        facture.type= await'paye'
+        facture.modePaiement= await req.body.mode
+        facture.refPaiement= await req.body.ref
+     //  await facture.save()
           const lerecue = await new Recue({
                 montant:facture.montant,
                 facture:facture._id,
@@ -80,7 +80,7 @@ const payerFacture= async (req, res, next) => {
                 creerPar: req.user,
                 client:facture.client
             }).save()  
-           facture.recue=lerecue._id
+           facture.recue= await lerecue._id
            await facture.save()
         
          
