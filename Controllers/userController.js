@@ -87,7 +87,7 @@ const inscriptionPersonnel= async (req, res, next) => {
 }
 const listeParent= async (req, res, next) => {
   try{
-  const liste= await Parent.find({creerPar:req.user})
+  const liste= await Parent.find({creerPar:req.user}).sort({'updatedAt': -1})
   res.status(200).json(liste)
   }catch(error){
      res.json({message:error});
@@ -96,7 +96,7 @@ const listeParent= async (req, res, next) => {
 }
 const listeEnfant= async (req, res, next) => {
   try{
-  const liste= await Enfant.find({creerPar:req.user}).populate('formateur parent')
+  const liste= await Enfant.find({creerPar:req.user}).sort({'updatedAt': -1}).populate('formateur parent')
   res.status(200).json(liste)
   }catch(error){
      res.json({message:error});
@@ -105,7 +105,7 @@ const listeEnfant= async (req, res, next) => {
 }
 const listePersonnel= async (req, res, next) => {
   try{
-    const liste= await Personnel.find({creerPar:req.user})
+    const liste= await Personnel.find({creerPar:req.user}).sort({'updatedAt': -1})
     res.status(200).json(liste)
     }catch(error){
        res.json({message:error});
