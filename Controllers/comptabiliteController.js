@@ -44,7 +44,7 @@ const periode=`${moment(new Date()).locale('fr').format("MMM")}  ${moment(new Da
 }
 const listeFacture= async (req, res, next) => {
     try {
-        const liste= await Facture.find({creerPar:req.user}).populate("client recue")
+        const liste= await Facture.find({creerPar:req.user}).sort({'updatedAt': -1}).populate("client recue")
         res.status(200).json(liste)
     } catch (error) {
         res.json({message:error});
@@ -104,7 +104,7 @@ const voirByIdFacture= async (req, res, next) => {
 const listeRecue= async (req, res, next) => {
     console.log()
     try {
-        const liste= await Recue.find({creerPar:req.user}).populate("client facture")
+        const liste= await Recue.find({creerPar:req.user}).sort({'updatedAt': -1}).populate("client facture")
         res.status(200).json(liste)
     } catch (error) {
         res.json({message:error});
@@ -124,7 +124,7 @@ const voirRecueByid= async (req, res, next) => {
 /* ----------------------- Commission ---------------------------------*/
 const listeComission= async (req, res, next) => {
     try {
-        const liste= await Commission.find({creerPar:req.user}).populate("client recue")
+        const liste= await Commission.find({creerPar:req.user}).sort({'updatedAt': -1}).populate("client recue")
         res.status(200).json(liste)
     } catch (error) {
         res.json({message:error});
@@ -192,7 +192,7 @@ const voirCharge= async (req, res, next) => {
         }
         const listeCharge= async (req, res, next) => {
             try {
-                const liste= await Charge.find({creerPar:req.user})
+                const liste= await Charge.find({creerPar:req.user}).sort({'updatedAt': -1})
                 res.status(200).json(liste)
             } catch (error) {
                 res.json({message:error});
@@ -261,7 +261,7 @@ let  headers = {
 
 const listeBilan= async (req, res, next) => {
    try {
-       const liste= await Bilan.find({creerPar:req.user})
+       const liste= await Bilan.find({creerPar:req.user}).sort({'updatedAt': -1})
        res.status(200).json(liste)
    } catch (error) {
        res.json({message:error});
