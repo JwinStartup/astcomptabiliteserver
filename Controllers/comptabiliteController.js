@@ -79,10 +79,9 @@ const payerFacture= async (req, res, next) => {
                 refPaiement:facture.refPaiement,
                 creerPar: req.user,
                 client:facture.client
-            }).save().then(async(doc)=> {
-                   facture.recue=doc._id
-                    await facture.save()
-                     })
+            }).save()  
+           facture.recue=lerecue._id
+           await facture.save()
         
          
         res.status(200).json(facture)
