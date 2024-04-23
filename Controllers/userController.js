@@ -17,6 +17,7 @@ const inscriptionParent= async (req, res, next) => {
         email: req.body.email,
         whatshapp: req.body.whatshapp,
         ville: req.body.ville,
+        genre: req.body.genre,
         commune: req.body.commune,
         nombreEnfant: req.body.nombreEnfant,
         montantCours:req.body.montantCours,
@@ -47,6 +48,7 @@ const inscriptionEnfant= async (req, res, next) => {
         cel: req.body.cel,
         ville: req.body.ville,
         commune: req.body.commune,
+         genre: req.body.genre,
         classe: req.body.classe,
         formateur: req.body.formateur,
         parent: req.body.parent,
@@ -72,6 +74,7 @@ const inscriptionPersonnel= async (req, res, next) => {
         email: req.body.email,
         whatshapp: req.body.whatshapp,
         ville: req.body.ville,
+         genre: req.body.genre,
         commune: req.body.commune,
         discipline: req.body.discipline,
         creerPar:req.user
