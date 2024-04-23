@@ -222,9 +222,9 @@ const voirCharge= async (req, res, next) => {
         const voirTotal= async (req, res, next) => {
             try{
             const arrayParent= await Parent.find({creerPar:req.user})
-            const arrayFactureImpaye= await Charge.find({periode:periode,type:'impaye',creerPar:req.user})
-            const arrayFacturePaye= await Charge.find({periode:periode,type:'paye',creerPar:req.user})
-              const Totalcommission=   arrayParent.reduce((acc,cur)=> acc + cur.montant,0)
+            const arrayFactureImpaye= await Facture.find({periode:periode,type:'impaye',creerPar:req.user})
+            const arrayFacturePaye= await Facture.find({periode:periode,type:'paye',creerPar:req.user})
+              const Totalcommission=   arrayParent.reduce((acc,cur)=> acc + cur.commission,0)
                const TotalImpaye=  arrayFactureImpaye.reduce((acc,cur)=> acc + cur.montant,0)
                const Totalpaye=  arrayFacturePaye.reduce((acc,cur)=> acc + cur.montant,0)
                console.log({
