@@ -14,6 +14,9 @@ var personnelSchema = new Schema({
   whatshapp: {
     type: String,
   },
+  genre: {
+    type: String,
+  },
   ville: {
     type: String,
   },
