@@ -11,6 +11,9 @@ var enfantSchema = new Schema({
   ville: {
     type: String,
   },
+  genre: {
+    type: String,
+  },
   cel: {
     type: String,
   },
