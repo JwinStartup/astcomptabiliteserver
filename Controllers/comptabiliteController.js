@@ -1,6 +1,7 @@
 const Facture = require("../models/facture.js");
 const Recue = require("../models/recue.js");
 const Commission = require("../models/commission.js");
+const Parent = require("../models/parent.js");
 const Bilan = require("../models/bilan.js");
 const Charge = require("../models/charge.js");
 const moment = require("moment")
