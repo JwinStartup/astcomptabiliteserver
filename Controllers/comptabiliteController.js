@@ -207,11 +207,37 @@ const voirCharge= async (req, res, next) => {
             const arrayCharge= await Charge.find({periode:periode,creerPar:req.user})
             const arrayRecue= await Recue.find({periode:periode,creerPar:req.user})
                 const bilanPeriode= await Bilan.findById(req.params.id)
-               bilanPeriode.commission=  await arrayComm.reduce((acc,cur)=> acc + cur.montant,0)
+              if ( bilanPeriode.statut!=='cloturé') {
                bilanPeriode.charge= await arrayCharge.reduce((acc,cur)=> acc + cur.montant,0)
                bilanPeriode.recette= await arrayRecue.reduce((acc,cur)=> acc + cur.montant,0)
                  await  bilanPeriode.save().then((doc)=>res.status(200).json(doc))
-                   console.log(bilanPeriode)
+              } else {
+                  res.status(200).json(bilanPeriode)
+              }
+            }catch(error){
+             console.log(error)
+            }
+}
+        const voirTotal= async (req, res, next) => {
+            try{
+            const arrayParent= await Parent.find({creerPar:req.user})
+            const arrayFactureImpaye= await Charge.find({periode:periode,type:'impaye',creerPar:req.user})
+            const arrayFacturePaye= await Charge.find({periode:periode,type:'paye',creerPar:req.user})
+              const Totalcommission=   arrayParent.reduce((acc,cur)=> acc + cur.montant,0)
+               const TotalImpaye=  arrayFactureImpaye.reduce((acc,cur)=> acc + cur.montant,0)
+               const Totalpaye=  arrayFacturePaye.reduce((acc,cur)=> acc + cur.montant,0)
+               console.log({
+                  commissions:Totalcommission,
+                  impayes:TotalImpaye,
+                  payes:Totalpaye
+                 })
+                res.status(200).json(
+                 {
+                  commissions:Totalcommission,
+                  impayes:TotalImpaye,
+                  payes:Totalpaye
+                 }
+                )
             }catch(error){
              console.log(error)
             }
@@ -279,6 +305,7 @@ module.exports = {
     voirCharge,
     listeRecue,
     listeComission,
+     voirTotal,
     creerCharge,
     modifierCharge,
     supprimerCharge,
