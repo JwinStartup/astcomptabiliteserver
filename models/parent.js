@@ -11,6 +11,9 @@ var parentSchema = new Schema({
   email: {
     type: String,
   },
+  genre: {
+    type: String,
+  },
   whatshapp: {
     type: String,
   },
