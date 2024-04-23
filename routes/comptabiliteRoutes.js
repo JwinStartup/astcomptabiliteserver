@@ -14,6 +14,7 @@ voirRecueByid,
 listeRecue,
 listeComission,
 creerCharge,
+  voirTotal,
 listeCharge,
 voirByIdBilan,
   voirCharge,
@@ -52,6 +53,7 @@ router.post("/cloturer", cloturer);
 router.get("/voirByIdBilan/:id",auth, voirByIdBilan); 
 router.post("/partager",partager);
 router.get("/listeBilan",auth, listeBilan);
+router.get("/voirTotal",auth, voirTotal);
 
 module.exports = {
   routes: router,
