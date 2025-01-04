@@ -314,6 +314,7 @@ const supprimerEnfant = async (req, res, next) => {
 };
 const supprimerPersonnel = async (req, res, next) => {
   try {
+    console.log('le id du personnel a supprimé:',req.params.id)
     const moi = await Personnel.deleteOne({_id:req.params.id})
     res.json("success")
   } catch (error) {
