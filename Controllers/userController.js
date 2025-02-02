@@ -91,7 +91,7 @@ const inscriptionPersonnel= async (req, res, next) => {
 const listeParent= async (req, res, next) => {
   try{
   const liste= await Parent.find({creerPar:req.user}).sort({'updatedAt': -1})
-  res..json(liste)
+  res.json(liste)
   }catch(error){
      res.json({message:error});
 
