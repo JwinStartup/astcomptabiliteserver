@@ -91,7 +91,7 @@ const inscriptionPersonnel= async (req, res, next) => {
 const listeParent= async (req, res, next) => {
   try{
   const liste= await Parent.find({creerPar:req.user}).sort({'updatedAt': -1})
-  res.status(200).json(liste)
+  res..json(liste)
   }catch(error){
      res.json({message:error});
 
@@ -150,7 +150,7 @@ const lister = async (req, res, next) => {
     const liste = await User.find();
     res.json(liste);
   } catch (error) {
-    res.status(404).json(error);
+    res.json(error);
   }
 };
 
@@ -195,6 +195,7 @@ const modifier = async (req, res, next) => {
         cel:req.body.cel,});
     res.json(moi);
   } catch (error) {
+    new Error(error)
   }
 };
 const modifierEnfant = async (req, res, next) => {
@@ -209,11 +210,11 @@ const modifierEnfant = async (req, res, next) => {
         formateur: req.body.formateur,
         parent: req.body.parent,
     });
-    await moi.save()
-      .then((doc) =>
-        res.json(doc)
-      )
+          console.log(moi)
+        res.json(moi)
+      
   } catch (error) {
+    new Error(error)
   }
 };
 const modifierParent = async (req, res, next) => {
@@ -228,11 +229,11 @@ const modifierParent = async (req, res, next) => {
         nombreEnfant: req.body.nombreEnfant,
         quartier: req.body.quartier,
     });
-    await moi.save()
-      .then((doc) =>
-        res.json(doc)
-      )
+      console.log(moi)
+        res.json(moi)
+      
   } catch (error) {
+    new Error(error)
   }
 };
 const modifierPersonnel = async (req, res, next) => {
@@ -247,21 +248,21 @@ const modifierPersonnel = async (req, res, next) => {
         commune: req.body.commune,
         discipline: req.body.discipline,
     });
-    await moi.save()
-      .then((doc) =>
-        res.json(doc)
-      )
+        console.log(moi)
+        res.json(moi)
   } catch (error) {
+    new Error(error)
   }
 };
 const supprimer = async (req, res, next) => {
   try {
     console.log(req.params.id)
-    const moi = await User.findByIdAndDelete(req.params.id).then((doc) =>
-        res.json(doc)
-      )
+    const moi = await User.findByIdAndDelete(req.params.id)
+        res.json('success')
+      
     
   } catch (error) {
+    new Error(error)
   }
 };
 const voir = async (req, res, next) => {
@@ -269,6 +270,7 @@ const voir = async (req, res, next) => {
     const moi = await User.findById(req.params.id);
         res.json(moi)
   } catch (error) {
+    new Error(error)
   }
 };
 const voirParent = async (req, res, next) => {
@@ -276,6 +278,7 @@ const voirParent = async (req, res, next) => {
     const moi = await Parent.findById(req.params.id);
         res.json(moi)
   } catch (error) {
+    new Error(error)
   }
 };
 const voirPersonnel = async (req, res, next) => {
@@ -283,6 +286,7 @@ const voirPersonnel = async (req, res, next) => {
     const moi = await Personnel.findById(req.params.id);
         res.json(moi)
   } catch (error) {
+    new Error(error)
   }
 };
 const voirEnfant = async (req, res, next) => {
@@ -290,19 +294,21 @@ const voirEnfant = async (req, res, next) => {
     const moi = await Enfant.findById(req.params.id);
         res.json(moi)
   } catch (error) {
+    new Error(error)
   }
 };
 const supprimerParent = async (req, res, next) => {
   try {
-    const moi = await Parent.deleteOne({_id:req.params.id})
+    const moi = await Parent.findByIdAndDelete(req.params.id)
     res.json("success")
   } catch (error) {
+    new Error(error)
   }
 };
 const supprimerEnfant = async (req, res, next) => {
   try {
     console.log(req.params.id)
-     await Enfant.deleteOne({_id:req.params.id})
+     await Enfant.findByIdAndDelete(req.params.id)
     res.json("success")
    // const moi = await Enfant.findByIdAndDelete(req.params.id).save()
     //  .then((doc) =>
@@ -310,21 +316,24 @@ const supprimerEnfant = async (req, res, next) => {
     //  );
       
   } catch (error) {
+    new Error(error)
   }
 };
 const supprimerPersonnel = async (req, res, next) => {
   try {
     console.log('le id du personnel a supprimé:',req.params.id)
-    const moi = await Personnel.deleteOne({_id:req.params.id})
+    const moi = await Personnel.findByIdAndDelete(req.params.id)
     res.json("success")
   } catch (error) {
+    new Error(error)
   }
 };
 const deconnexion = async (req, res, next) => {
   try {
     res.cookie('jwt','',{maxAge:1,sameSite: "none",secure: "true"});
-    res.status(200).json({message:"logout"})
+    res.json({message:"logout"})
   } catch (error) {
+    new Error(error)
   }
 };
 
