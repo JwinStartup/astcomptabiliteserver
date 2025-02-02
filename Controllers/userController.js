@@ -206,6 +206,7 @@ const modifierEnfant = async (req, res, next) => {
         cel: req.body.cel,
         ville: req.body.ville,
         commune: req.body.commune,
+         genre: req.body.genre,
         classe: req.body.classe,
         formateur: req.body.formateur,
         parent: req.body.parent,
@@ -221,13 +222,18 @@ const modifierParent = async (req, res, next) => {
   try {
     console.log(req.body)
     const moi = await Parent.findByIdAndUpdate(req.body._id,{
-        nom: req.body.nom,
+         nom: req.body.nom,
         prenoms: req.body.prenoms,
         cel: req.body.cel,
+        email: req.body.email,
+        whatshapp: req.body.whatshapp,
         ville: req.body.ville,
+        genre: req.body.genre,
         commune: req.body.commune,
         nombreEnfant: req.body.nombreEnfant,
+        montantCours:req.body.montantCours,
         quartier: req.body.quartier,
+        commission:req.body.commission,
     });
       console.log(moi)
         res.json(moi)
@@ -239,12 +245,13 @@ const modifierParent = async (req, res, next) => {
 const modifierPersonnel = async (req, res, next) => {
   try {
     const moi = await Personnel.findByIdAndUpdate(req.body._id,{
-        nom: req.body.nom,
+       nom: req.body.nom,
         prenoms: req.body.prenoms,
         cel: req.body.cel,
         email: req.body.email,
         whatshapp: req.body.whatshapp,
         ville: req.body.ville,
+         genre: req.body.genre,
         commune: req.body.commune,
         discipline: req.body.discipline,
     });
