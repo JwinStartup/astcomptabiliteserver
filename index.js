@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const users = require("./routes/userRoutes.js");
+const cours=require("./routes/cours.js");
 const comptabilite = require("./routes/comptabiliteRoutes.js");
 //const preinscription = require("./routes/preinscriptionRoutes.js");
 const cookieParser=require('cookie-parser')
@@ -32,6 +33,7 @@ app.use((req, res, next) => {
 
 app.use("/api/users", users.routes);
 app.use("/api/comptabilites", comptabilite.routes);
+app.use("/api/cours",cours );
 
 app.listen(port, () =>
   console.log(`l'application  a été lancée sur url http://localhost:` + port)

@@ -23,9 +23,7 @@ var parentSchema = new Schema({
   montantCours: {
     type: Number,
   },
-  commission: {
-    type: Number,
-  },
+
   ville: {
     type: String,
   },
@@ -41,7 +39,11 @@ var parentSchema = new Schema({
   creerPar:{
     type:Schema.Types.ObjectId,
  ref:'User'
-}
+},
+cours:[{
+    type: Schema.Types.ObjectId,
+    ref: 'Cours'
+  }],
 },
 {
   timestamps: true

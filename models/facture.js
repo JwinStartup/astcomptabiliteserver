@@ -5,29 +5,31 @@ var factureSchema = new Schema({
   montant: {
     type: Number,
   },
+  anneeAcademique: {
+    type: String,
+  },
+  resteApayer: {
+    type: Number,
+  },
   periode: {
     type: String,
   },
-  periodeAjouter: {
+   type: {
     type: String,
   },
-  type: {
-    type: String,
-  },
-  refPaiement: {
-    type: String,
-  },
-  modePaiement: {
-    type: String,
-  },
+
+  cours:[{
+    type: Schema.Types.ObjectId,
+    ref: 'Cours'
+  }],
   creerPar:{
     type:Schema.Types.ObjectId,
  ref:'User'
 },
-  recue:{
-    type:Schema.Types.ObjectId,
- ref:'Recue'
-},
+recues:[{
+  type: Schema.Types.ObjectId,
+  ref: 'Recue'
+}],
   client:{
     type:Schema.Types.ObjectId,
  ref:'Parent'

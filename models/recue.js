@@ -2,7 +2,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 var recueSchema = new Schema({
-  montant: {
+  anneeAcademique: {
+    type: String,
+  },
+  montantPaye : {
     type: Number,
   },
  facture:{
@@ -15,9 +18,7 @@ refPaiement: {
 periode: {
     type: String,
   },
-  periodeAjouter: {
-    type: String,
-  },
+
   modePaiement: {
     type: String,
   },
