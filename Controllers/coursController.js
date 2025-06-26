@@ -15,7 +15,7 @@ exports.createCours = async (req, res) => {
     // Création du cours
     const cours = new Cours(data);
     //utilison new Cour({})
-  
+    await cours.save()
     console.log(cours)
     // Ajout du cours dans le parent
     if (!parent.cours) parent.cours = [];
