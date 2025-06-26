@@ -9,7 +9,11 @@ const coursSchema = new Schema({
   matieres: [{ type: String, required: true }],
   prix: { type: Number, required: true },
   commission: { type: Number, required: true },
-  parent: { type: Schema.Types.ObjectId, ref: "Parent", required: true }
+  parent: { type: Schema.Types.ObjectId, ref: "Parent", required: true },
+  creerPar:{
+      type:Schema.Types.ObjectId,
+   ref:'User'
+  },
 }, {
   timestamps: true
 });
