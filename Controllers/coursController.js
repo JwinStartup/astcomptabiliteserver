@@ -5,6 +5,7 @@ const Parent = require("../models/parent");
 exports.createCours = async (req, res) => {
   try {
     const data = { ...req.body, creerPar: req.user };
+    console.log(data)
     // Recherche du parent par id
     const parent = await Parent.findById(data.parentId);
     if (!parent) {
@@ -12,6 +13,7 @@ exports.createCours = async (req, res) => {
     }
     // Création du cours
     const cours = await Cours.create(data);
+    console.log(cours)
     // Ajout du cours dans le parent
     if (!parent.cours) parent.cours = [];
     parent.cours.push(cours._id);
