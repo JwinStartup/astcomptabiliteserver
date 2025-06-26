@@ -8,11 +8,14 @@ exports.createCours = async (req, res) => {
     console.log(data)
     // Recherche du parent par id
     const parent = await Parent.findById(data.parentId);
+    console.log(parent)
     if (!parent) {
       return res.status(404).json({ error: "Parent non trouvé" });
     }
     // Création du cours
-    const cours = await Cours.create(data);
+    const cours = new Cours(data);
+    //utilison new Cour({})
+  
     console.log(cours)
     // Ajout du cours dans le parent
     if (!parent.cours) parent.cours = [];
