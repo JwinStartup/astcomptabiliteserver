@@ -13,7 +13,15 @@ exports.createCours = async (req, res) => {
       return res.status(404).json({ error: "Parent non trouvé" });
     }
     // Création du cours
-    const cours = new Cours(data);
+    const cours = new Cours({
+      anneeAcademique:data.anneeAcademique,
+      eleve:data.eleve,
+      formateur:data.formateur,
+      classe:data.classe,
+      prix:data.prix,
+      commission:data.commission,
+      parent:data.parentId,
+      matieres:data.matieres});
     //utilison new Cour({})
     await cours.save()
     console.log(cours)
