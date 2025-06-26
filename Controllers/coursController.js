@@ -14,6 +14,7 @@ exports.createCours = async (req, res) => {
     }
     // Création du cours
     const cours = new Cours({
+      creerPar: req.user,
       anneeAcademique:data.anneeAcademique,
       eleve:data.eleve,
       formateur:data.formateur,
