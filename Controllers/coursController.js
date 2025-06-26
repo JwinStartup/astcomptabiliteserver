@@ -38,10 +38,12 @@ exports.createCours = async (req, res) => {
 // Récupérer tous les cours
 exports.getAllCours = async (req, res) => {
   try {
+    console.log('nous somme dans getAllCours')
     const cours = await Cours.find({ creerPar: req.user })
       .populate("eleve")
       .populate("parent")
       .populate("formateur");
+      console.log(cours)
     res.json(cours);
   } catch (err) {
     res.status(500).json({ error: err.message });
