@@ -33,7 +33,10 @@ const periode=`${moment(new Date()).locale('fr').format("MMM")}  ${moment(new Da
 }
 const listeFacture= async (req, res, next) => {
     try {
-        const liste= await Facture.find({creerPar:req.user}).sort({'updatedAt': -1}).populate("client").populate("cours")
+        const liste= await Facture.find({creerPar:req.user}).sort({'updatedAt': -1}).populate("client").populate({
+          path: "cours",
+          populate: { path: "eleve" }
+        })
      console.log(liste)
         res.status(200).json(liste)
     } catch (error) {
