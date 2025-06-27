@@ -56,8 +56,15 @@ exports.getCoursById = async (req, res) => {
   try {
     const cours = await Cours.findOne({ _id: req.params.id, creerPar: req.user })
       .populate("eleve")
-      .populate("parent")
+      .populate({
+        path: "parent",
+        populate: {
+          path: "cours",
+          populate: { path: "eleve" }
+        }
+      })
       .populate("formateur");
+    console.log(cours)
     if (!cours) return res.status(404).json({ error: "Cours non trouvé" });
     res.json(cours);
   } catch (err) {
