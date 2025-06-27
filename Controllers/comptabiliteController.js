@@ -11,6 +11,7 @@ const periode=`${moment(new Date()).locale('fr').format("MMM")}  ${moment(new Da
     /* ----------------------- facture ---------------------------------*/
     const creerFacture= async (req, res, next) => {
         try {
+            console.log('body:',req.body)
             const facture = await new Facture(
                 {
                     montant: req.body.montant,
@@ -23,22 +24,8 @@ const periode=`${moment(new Date()).locale('fr').format("MMM")}  ${moment(new Da
       }
       )
       .save()
-      .then((doc) =>{
-        res.json(doc)}
-        );
-        const length=await Facture.find({creerPar:req.user,periode:periode}).count() 
-         console.log(length)
-            if(length===1){
-                const bilan= new Bilan({
-                    recette:0,
-                    charge:0,
-                    commission:0,
-                    resultat:0,
-                    statut:'en cours',
-                    periode:periode,
-                    creerPar:req.user,
-                }).save()
-            }
+      console.log(facture)
+      res.json(facture)
 
   } catch (error) {
     res.json({message:error});
