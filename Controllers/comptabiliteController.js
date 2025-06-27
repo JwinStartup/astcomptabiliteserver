@@ -14,10 +14,11 @@ const periode=`${moment(new Date()).locale('fr').format("MMM")}  ${moment(new Da
             const facture = await new Facture(
                 {
                     montant: req.body.montant,
-                    periode: periode  ,
-                    periodeAjouter:req.body.periodeAjouter ,
+                    periode: req.body.periode,
                     client: req.body.client,
                     creerPar:req.user,
+                    cours:req.body.cours,
+                    anneeAcademique:req.body.anneeAcademique,
                     type:"impaye"
       }
       )
