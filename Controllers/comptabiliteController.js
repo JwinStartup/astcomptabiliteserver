@@ -1,5 +1,5 @@
 const Facture = require("../models/facture.js");
-const Recue = require("../models/recue.js");
+const Paiement = require("../models/paiement.js");
 const Commission = require("../models/commission.js");
 const Parent = require("../models/parent.js");
 const Bilan = require("../models/bilan.js");
@@ -58,26 +58,74 @@ try{
 const payerFacture= async (req, res, next) => {
     console.log(req.body)
     try{
-         const facture = await Facture.findById(req.body.idFacture)
-        facture.type= await'paye'
-        facture.modePaiement= await req.body.mode
-        facture.refPaiement= await req.body.ref
-     //  await facture.save()
-          const lerecue = await new Recue({
-                montant:facture.montant,
-                facture:facture._id,
-                periode:facture.periode,
-                periodeAjouter:facture.periodeAjouter,
-                modePaiement:facture.modePaiement,
-                refPaiement:facture.refPaiement,
+         //creer un nouveau recue et enregistre le montant payer et le mode de paiement
+
+         const paiement = await new Paiement({
+                montant: req.body.montantPayer,
+                facture: req.body.idFacture,
+                periode: req.body.periode,
+                refPaiement: req.body.ref,
+                modePaiement: req.body.mode,
                 creerPar: req.user,
-                client:facture.client
-            }).save()  
-           facture.recue= await lerecue._id
-           await facture.save()
+                client: req.body.client
+            }).save()
+        console.log(paiement)
+
+        const facture = await Facture.findById(req.body.idFacture)
+        if (!facture.montantPayer) {
+            facture.montantPayer = 0
+        }
         
-         
+        if (paiement) {
+            // mettre a jour la facture
+            facture.montantPayer += req.body.montantPayer
+            facture.resteApayer = facture.montant - facture.montantPayer
+            facture.paiement.push(paiement._id)
+            facture.type = req.body.type
+            await facture.save().then((doc) => {
+                console.log(doc)
+            })
+        }
         res.status(200).json(facture)
+    }catch(error){
+        console.log(error)
+    }
+}
+const payerEncoreFacture= async (req, res, next) => {
+    console.log(req.body)
+    try{
+        //creer un nouveau recue et enregistre le montant payer et si le reste a payer est 0 
+        //alors on change le type de la facture en totalite sinon on laisse le type en enpartie
+        const paiement = await new Paiement({
+                montant: req.body.montantPayer,
+                facture: req.body.idFacture,
+                periode: req.body.periode,
+                refPaiement: req.body.ref,
+                modePaiement: req.body.mode,
+                creerPar: req.user,
+                client: req.body.client
+            }).save()
+        console.log(paiement)
+        const facture = await Facture.findById(req.body.idFacture)
+        if (paiement) {
+            // mettre a jour la facture
+            if (!facture.montantPayer) {
+                facture.montantPayer = 0
+            }
+            facture.montantPayer += req.body.montantPayer
+            facture.resteApayer = facture.montant - facture.montantPayer
+            facture.paiement.push(paiement._id)
+            if (facture.resteApayer === 0) {
+                facture.type = "totalite"
+            } else {
+                facture.type = "enpartie"
+            }
+            await facture.save().then((doc) => {
+                console.log(doc)
+            })
+        }
+
+      res.status(200).json(facture)
     }catch(error){
         console.log(error)
     }
@@ -97,7 +145,7 @@ const voirByIdFacture= async (req, res, next) => {
 const listeRecue= async (req, res, next) => {
     console.log()
     try {
-        const liste= await Recue.find({creerPar:req.user}).sort({'updatedAt': -1}).populate("client facture")
+        const liste= await Paiement.find({creerPar:req.user}).sort({'updatedAt': -1}).populate("client facture")
         res.status(200).json(liste)
     } catch (error) {
         res.json({message:error});
@@ -106,7 +154,7 @@ const listeRecue= async (req, res, next) => {
 const voirRecueByid= async (req, res, next) => {
  try {
         console.log("params:",req.params.id)
-        const liste= await Recue.findOne({facture:req.params.id}).populate("client facture")
+        const liste= await Paiement.findOne({facture:req.params.id}).populate("client facture")
         console.log("la liste:",liste)
         res.status(200).json(liste)
     } catch (error) {
@@ -198,7 +246,7 @@ const voirCharge= async (req, res, next) => {
             try{
             const arrayComm= await Commission.find({periode:periode,creerPar:req.user})
             const arrayCharge= await Charge.find({periode:periode,creerPar:req.user})
-            const arrayRecue= await Recue.find({periode:periode,creerPar:req.user})
+            const arrayRecue= await Paiement.find({periode:periode,creerPar:req.user})
                 const bilanPeriode= await Bilan.findById(req.params.id)
               if ( bilanPeriode.statut!=='cloturé') {
                bilanPeriode.charge= await arrayCharge.reduce((acc,cur)=> acc + cur.montant,0)
@@ -291,6 +339,7 @@ module.exports = {
     partager,
     modifierFacture,
     payerFacture,
+    payerEncoreFacture,
     supprimerFacture,
     voirByIdFacture,
     listeFacture,

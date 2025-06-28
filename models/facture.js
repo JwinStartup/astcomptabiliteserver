@@ -4,12 +4,18 @@ const Schema = mongoose.Schema;
 var factureSchema = new Schema({
   montant: {
     type: Number,
+    default: 0,
   },
   anneeAcademique: {
     type: String,
   },
+  montantPayer: {
+    type: Number,
+    default: 0,
+  },
   resteApayer: {
     type: Number,
+    default: 0,
   },
   periode: {
     type: String,
@@ -26,9 +32,9 @@ var factureSchema = new Schema({
     type:Schema.Types.ObjectId,
  ref:'User'
 },
-recues:[{
+paiement:[{
   type: Schema.Types.ObjectId,
-  ref: 'Recue'
+  ref: 'Paiement'
 }],
   client:{
     type:Schema.Types.ObjectId,

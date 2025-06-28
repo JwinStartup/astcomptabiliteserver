@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-var recueSchema = new Schema({
+var paiementSchema = new Schema({
   anneeAcademique: {
     type: String,
   },
   montantPaye : {
     type: Number,
+    default: 0,
   },
  facture:{
     type:Schema.Types.ObjectId,
@@ -35,4 +36,4 @@ periode: {
   timestamps: true
 });
 
-module.exports = mongoose.model("Recue", recueSchema);
+module.exports = mongoose.model("Paiement", paiementSchema);

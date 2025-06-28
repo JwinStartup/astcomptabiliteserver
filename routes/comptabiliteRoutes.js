@@ -23,6 +23,7 @@ voirByIdBilan,
 cloturer,
   partager,
 listeBilan,
+payerEncoreFacture,
 } = require("../Controllers/comptabiliteController.js");
 const auth = require("../Middleware/auth.js");
 
@@ -31,6 +32,7 @@ router.post("/creerFacture",auth, creerFacture);
 router.get("/listeFacture",auth, listeFacture);
 router.post("/modifierFacture",auth, modifierFacture);
 router.post("/payerFacture",auth, payerFacture);
+router.post("/payerEncoreFacture",auth, payerEncoreFacture); 
 router.get("/supprimerFacture/:id",auth, supprimerFacture);
 router.get("/voirByIdFacture/:id", voirByIdFacture);
 
