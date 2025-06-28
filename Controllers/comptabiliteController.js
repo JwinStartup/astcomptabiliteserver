@@ -75,7 +75,7 @@ const payerFacture= async (req, res, next) => {
         if (!facture.montantPayer) {
             facture.montantPayer = 0
         }
-        
+
         if (paiement) {
             // mettre a jour la facture
             facture.montantPayer += req.body.montantPayer
@@ -112,8 +112,9 @@ const payerEncoreFacture= async (req, res, next) => {
             if (!facture.montantPayer) {
                 facture.montantPayer = 0
             }
-            facture.montantPayer += req.body.montantPayer
-            facture.resteApayer = facture.montant - facture.montantPayer
+            //convertir req.body.monTantPayer en valeur numerique
+            facture.montantPayer += Number(req.body.montantPayer)
+            facture.resteApayer -= facture.montantPayer
             facture.paiement.push(paiement._id)
             if (facture.resteApayer === 0) {
                 facture.type = "totalite"
