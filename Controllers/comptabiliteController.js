@@ -114,7 +114,7 @@ const payerEncoreFacture= async (req, res, next) => {
             }
             //convertir req.body.monTantPayer en valeur numerique
             facture.montantPayer += Number(req.body.montantPayer)
-            facture.resteApayer =Number(facture.montantPayer) - Number(req.body.montantPayer)
+            facture.resteApayer =Number(req.body.resteApayer)
             facture.paiement.push(paiement._id)
             if (facture.resteApayer === 0) {
                 facture.type = "totalite"
