@@ -5,7 +5,8 @@ const Parent = require("../models/parent.js");
 const Bilan = require("../models/bilan.js");
 const Charge = require("../models/charge.js");
 const moment = require("moment")
-const axios = require("axios")
+const axios = require("axios");
+const { patch } = require("../routes/cours.js");
 const periode=`${moment(new Date()).locale('fr').format("MMM")}  ${moment(new Date()).locale('fr').format("YYYY")}`
  
     /* ----------------------- facture ---------------------------------*/
@@ -30,6 +31,29 @@ const periode=`${moment(new Date()).locale('fr').format("MMM")}  ${moment(new Da
   } catch (error) {
     res.json({message:error});
 }
+}
+//facture by id : getFactureById
+const getFactureById = async (req, res, next) => {
+    try {
+        console.log("params:",req.params.id)
+        const facture = await Facture.findById(req.params.id)
+        .populate(
+            {
+                patch: "client",
+
+            }
+        )
+        .populate({
+            patch: "paiement",
+            populate: { path: "client" }
+        
+        })
+        console.log("la facture:",facture)
+        res.status(200).json(facture)
+    } catch (error) {
+        res.json({message:error});
+    }
+        
 }
 const listeFacture= async (req, res, next) => {
     try {
@@ -355,5 +379,6 @@ module.exports = {
     listeCharge,
     voirByIdBilan,
     cloturer,
+    getFactureById,
     listeBilan
 };
