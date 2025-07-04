@@ -85,7 +85,7 @@ const payerFacture= async (req, res, next) => {
          //creer un nouveau recue et enregistre le montant payer et le mode de paiement
 
          const paiement = await new Paiement({
-                montant: req.body.montantPayer,
+                montantPaye: req.body.montantPayer,
                 facture: req.body.idFacture,
                 periode: req.body.periode,
                 refPaiement: req.body.ref,
@@ -121,7 +121,7 @@ const payerEncoreFacture= async (req, res, next) => {
         //creer un nouveau recue et enregistre le montant payer et si le reste a payer est 0 
         //alors on change le type de la facture en totalite sinon on laisse le type en enpartie
         const paiement = await new Paiement({
-                montant: req.body.montantPayer,
+                montantPaye: req.body.montantPaye,
                 facture: req.body.idFacture,
                 periode: req.body.periode,
                 refPaiement: req.body.ref,
