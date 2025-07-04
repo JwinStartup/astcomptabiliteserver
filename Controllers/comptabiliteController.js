@@ -81,17 +81,22 @@ try{
 const payerFacture= async (req, res, next) => {
     console.log(req.body)
     try{
-         //creer un nouveau recue et enregistre le montant payer et le mode de paiement
+        // Vérification du montant
+        const montant = Number(req.body.montantPaye);
+        if (isNaN(montant) || montant <= 0) {
+            return res.status(400).json({ message: "Le montantPaye est invalide ou manquant." });
+        }
 
-         const paiement = await new Paiement({
-                montantPaye:Number(req.body.montantPaye),
-                facture: req.body.idFacture,
-                periode: req.body.periode,
-                refPaiement: req.body.ref,
-                modePaiement: req.body.mode,
-                creerPar: req.user,
-                client: req.body.client
-            }).save()
+        //creer un nouveau recue et enregistre le montant payer et le mode de paiement
+        const paiement = await new Paiement({
+            montantPaye: montant,
+            facture: req.body.idFacture,
+            periode: req.body.periode,
+            refPaiement: req.body.ref,
+            modePaiement: req.body.mode,
+            creerPar: req.user,
+            client: req.body.client
+        }).save()
         console.log(paiement)
 
         const facture = await Facture.findById(req.body.idFacture)
@@ -101,7 +106,7 @@ const payerFacture= async (req, res, next) => {
 
         if (paiement) {
             // mettre a jour la facture
-            facture.montantPayer += Number(req.body.montantPaye)
+            facture.montantPayer += montant
             facture.resteApayer = facture.montant - facture.montantPayer
             facture.paiement.push(paiement._id)
             facture.type = req.body.type
