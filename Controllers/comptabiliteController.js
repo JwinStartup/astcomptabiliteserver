@@ -84,7 +84,7 @@ const payerFacture= async (req, res, next) => {
          //creer un nouveau recue et enregistre le montant payer et le mode de paiement
 
          const paiement = await new Paiement({
-                montantPaye: req.body.montantPayer,
+                montantPaye:Number(req.body.montantPaye),
                 facture: req.body.idFacture,
                 periode: req.body.periode,
                 refPaiement: req.body.ref,
@@ -101,7 +101,7 @@ const payerFacture= async (req, res, next) => {
 
         if (paiement) {
             // mettre a jour la facture
-            facture.montantPayer += req.body.montantPayer
+            facture.montantPayer += Number(req.body.montantPaye)
             facture.resteApayer = facture.montant - facture.montantPayer
             facture.paiement.push(paiement._id)
             facture.type = req.body.type
@@ -136,7 +136,7 @@ const payerEncoreFacture= async (req, res, next) => {
                 facture.montantPayer = 0
             }
             //convertir req.body.monTantPayer en valeur numerique
-            facture.montantPayer += Number(req.body.montantPayer)
+            facture.montantPayer += Number(req.body.montantPaye)
             facture.resteApayer =Number(req.body.resteApayer)
             facture.paiement.push(paiement._id)
             if (facture.resteApayer === 0) {
