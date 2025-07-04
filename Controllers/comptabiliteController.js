@@ -35,16 +35,15 @@ const periode=`${moment(new Date()).locale('fr').format("MMM")}  ${moment(new Da
 //facture by id : getFactureById
 const getFactureById = async (req, res, next) => {
     try {
-        console.log("params:",req.params.id)
+        console.log("params getFactureById:",req.params.id)
         const facture = await Facture.findById(req.params.id)
         .populate(
             {
-                patch: "client",
-
+                path: "client", // correction ici
             }
         )
         .populate({
-            patch: "paiement",
+            path: "paiement", // correction ici
             populate: { path: "client" }
         
         })
