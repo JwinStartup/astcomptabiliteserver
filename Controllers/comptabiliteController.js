@@ -88,8 +88,19 @@ const payerFacture= async (req, res, next) => {
         }
 
         //creer un nouveau recue et enregistre le montant payer et le mode de paiement
+        console.log({
+            montantPaye: montant,
+            anneeAcademique:req.body.anneeAcademique,
+            facture: req.body.idFacture,
+            periode: req.body.periode,
+            refPaiement: req.body.ref,
+            modePaiement: req.body.mode,
+            creerPar: req.user,
+            client: req.body.client
+        })
         const paiement = await new Paiement({
             montantPaye: montant,
+            anneeAcademique:req.body.anneeAcademique,
             facture: req.body.idFacture,
             periode: req.body.periode,
             refPaiement: req.body.ref,
@@ -124,8 +135,19 @@ const payerEncoreFacture= async (req, res, next) => {
     try{
         //creer un nouveau recue et enregistre le montant payer et si le reste a payer est 0 
         //alors on change le type de la facture en totalite sinon on laisse le type en enpartie
+        console.log({
+                montantPaye: req.body.montantPaye,
+                anneeAcademique:req.body.anneeAcademique,
+                facture: req.body.idFacture,
+                periode: req.body.periode,
+                refPaiement: req.body.ref,
+                modePaiement: req.body.mode,
+                creerPar: req.user,
+                client: req.body.client
+            })
         const paiement = await new Paiement({
-                montantPaye: r,
+                montantPaye: req.body.montantPaye,
+                anneeAcademique:req.body.anneeAcademique,
                 facture: req.body.idFacture,
                 periode: req.body.periode,
                 refPaiement: req.body.ref,
