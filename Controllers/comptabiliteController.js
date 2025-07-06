@@ -82,7 +82,7 @@ const payerFacture= async (req, res, next) => {
     console.log(req.body)
     try{
         // Vérification du montant
-        const montant = Number(req.body.montantPaye);
+        const montant = Number(req.body.montantPayer);
         if (isNaN(montant) || montant <= 0) {
             return res.status(400).json({ message: "Le montantPaye est invalide ou manquant." });
         }
@@ -125,7 +125,7 @@ const payerEncoreFacture= async (req, res, next) => {
         //creer un nouveau recue et enregistre le montant payer et si le reste a payer est 0 
         //alors on change le type de la facture en totalite sinon on laisse le type en enpartie
         const paiement = await new Paiement({
-                montantPaye: req.body.montantPaye,
+                montantPaye: r,
                 facture: req.body.idFacture,
                 periode: req.body.periode,
                 refPaiement: req.body.ref,
