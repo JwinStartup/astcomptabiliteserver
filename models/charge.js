@@ -12,7 +12,7 @@ var chargeSchema = new Schema({
   type: {
     type: String,
   },
-  periodeAjouter: {
+  anneeAcademique: {
     type: String,
   },
   periode: {

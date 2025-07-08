@@ -7,6 +7,7 @@ const Charge = require("../models/charge.js");
 const moment = require("moment")
 const axios = require("axios");
 const { patch } = require("../routes/cours.js");
+const cours = require("../models/cours.js");
 const periode=`${moment(new Date()).locale('fr').format("MMM")}  ${moment(new Date()).locale('fr').format("YYYY")}`
  
     /* ----------------------- facture ---------------------------------*/
@@ -385,6 +386,51 @@ const listeBilan= async (req, res, next) => {
        res.json({message:error});
    }
 }
+
+// Statistique des factures : payé, impayé, en partie payé + total reste à payer
+const statistiqueFactures = async (req, res, next) => {
+    try {
+        const creerPar = req.user;
+        const periode = req.body.periode;
+
+        // Récupérer toutes les factures de l'utilisateur pour la période donnée
+        const factures = await Facture.find({ creerPar, periode });
+
+        // Récupérer toutes les commissions des cours à domicile pour la période donnée
+        const commissions = await cours.find({ creerPar, periode});
+
+        // Initialisation des compteurs et montants
+        let stats = {
+            paye: { count: 0, montant: 0 },
+            impaye: { count: 0, montant: 0 },
+            enpartie: { count: 0, montant: 0 },
+            totalResteApayer: 0,
+            totalCommissionCoursDomicile: 0
+        };
+
+        factures.forEach(facture => {
+            if (facture.type === "paye" || facture.type === "totalite") {
+                stats.paye.count += 1;
+                stats.paye.montant += facture.montantPayer || 0;
+            } else if (facture.type === "impaye") {
+                stats.impaye.count += 1;
+                stats.impaye.montant += facture.montant || 0;
+            } else if (facture.type === "enpartie") {
+                stats.enpartie.count += 1;
+                stats.enpartie.montant += facture.montantPayer || 0;
+            }
+            stats.totalResteApayer += facture.resteApayer || 0;
+        });
+
+        // Calcul du total des commissions des cours à domicile
+        stats.totalCommissionCoursDomicile = commissions.reduce((acc, cur) => acc + (cur.commission || 0), 0);
+
+        res.status(200).json(stats);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
 module.exports = { 
     creerFacture,
     partager,
@@ -406,5 +452,6 @@ module.exports = {
     voirByIdBilan,
     cloturer,
     getFactureById,
-    listeBilan
+    listeBilan,
+    statistiqueFactures
 };
