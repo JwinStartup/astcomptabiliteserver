@@ -390,15 +390,16 @@ const listeBilan= async (req, res, next) => {
 // Statistique des factures : payé, impayé, en partie payé + total reste à payer
 const statistiqueFactures = async (req, res, next) => {
     try {
+        console.log(req.body)
         const creerPar = req.user;
         const periode = req.body.periode;
 
         // Récupérer toutes les factures de l'utilisateur pour la période donnée
         const factures = await Facture.find({ creerPar, periode });
-
+         console.log("factures:",factures)
         // Récupérer toutes les commissions des cours à domicile pour la période donnée
         const commissions = await cours.find({ creerPar, periode});
-
+        console.log("commissions:",commissions)
         // Initialisation des compteurs et montants
         let stats = {
             paye: { count: 0, montant: 0 },
@@ -421,10 +422,10 @@ const statistiqueFactures = async (req, res, next) => {
             }
             stats.totalResteApayer += facture.resteApayer || 0;
         });
-
+      console.log("stats1:",stats)
         // Calcul du total des commissions des cours à domicile
         stats.totalCommissionCoursDomicile = commissions.reduce((acc, cur) => acc + (cur.commission || 0), 0);
-
+     console.log("stats2:",stats)
         res.status(200).json(stats);
     } catch (error) {
         res.status(500).json({ message: error.message });
