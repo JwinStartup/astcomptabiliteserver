@@ -390,10 +390,10 @@ const listeBilan= async (req, res, next) => {
 // Statistique des factures : payé, impayé, en partie payé + total reste à payer
 const statistiqueFactures = async (req, res, next) => {
     try {
-        console.log(req.params)
+        console.log(req.body)
         const creerPar = req.user;
-        const periode = req.params.periode;
-       const anneeAcademique=req.params.anneeAcademique 
+        const periode = req.body.periode;
+       const anneeAcademique=req.body.anneeAcademique 
         // Récupérer toutes les factures de l'utilisateur pour la période donnée
         const factures = await Facture.find({ creerPar, periode });
          console.log("factures:",factures)
