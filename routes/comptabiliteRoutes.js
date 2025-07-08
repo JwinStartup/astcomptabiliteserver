@@ -39,7 +39,7 @@ router.get("/supprimerFacture/:id",auth, supprimerFacture);
 router.get("/voirByIdFacture/:id", voirByIdFacture);
 router.get("/factureById/:id",auth, getFactureById);
 //statistiques des factures 
-router.get("/statistiquesFactures/:periode",auth, statistiqueFactures);
+router.get("/statistiquesFactures/:periode/:anneeAcademique",auth, statistiqueFactures);
 /* ----------------------- reçues ---------------------------------*/
 router.get("/voirRecueByid/:id", voirRecueByid);
 router.get("/listeRecue",auth, listeRecue);

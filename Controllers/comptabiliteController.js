@@ -393,12 +393,12 @@ const statistiqueFactures = async (req, res, next) => {
         console.log(req.params)
         const creerPar = req.user;
         const periode = req.params.periode;
-
+       const anneeAcademique=req.params.anneeAcademique 
         // Récupérer toutes les factures de l'utilisateur pour la période donnée
         const factures = await Facture.find({ creerPar, periode });
          console.log("factures:",factures)
         // Récupérer toutes les commissions des cours à domicile pour la période donnée
-        const commissions = await cours.find({ creerPar, periode});
+        const commissions = await cours.find({ creerPar, anneeAcademique});
         console.log("commissions:",commissions)
         // Initialisation des compteurs et montants
         let stats = {
