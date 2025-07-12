@@ -306,37 +306,54 @@ const voirCharge= async (req, res, next) => {
         // Récupérer toutes les commissions des cours à domicile pour l'année donnée
         const commissions = await cours.find({ creerPar, anneeAcademique});
         console.log("commissions:",commissions)
-        // Récupérer toutes les charges pour la période donnée
+        // Récupérer toutes les charges pour l'année académique donnée
         const charges = await charge.find({ creerPar, anneeAcademique});
         console.log("charges:",charges)
+        
         // Initialisation des compteurs et montants
         let stats = {
-            paye: 0,
-            impaye: 0,
-            enpartie: 0,
+            facturesPaye: { count: 0, montant: 0 },
+            facturesImpaye: { count: 0, montant: 0 },
+            facturesEnpartie: { count: 0, montant: 0 },
             totalResteApayer: 0,
             totalCommissionCoursDomicile: 0,
-            totalCharge:0
+            totalCharge: 0,
+            totalRecettes: 0,
+            beneficeNet: 0,
+            anneeAcademique: anneeAcademique
         };
 
+        // Traitement des factures
         factures.forEach(facture => {
             if (facture.type === "paye" || facture.type === "totalite") {
-                stats.paye.montant += facture.montantPayer || 0;
+                stats.facturesPaye.count += 1;
+                stats.facturesPaye.montant += facture.montantPayer || 0;
             } else if (facture.type === "impaye") {
-                stats.impaye.montant += facture.montant || 0;
+                stats.facturesImpaye.count += 1;
+                stats.facturesImpaye.montant += facture.montant || 0;
             } else if (facture.type === "enpartie") {
-                stats.enpartie.montant += facture.montantPayer || 0;
+                stats.facturesEnpartie.count += 1;
+                stats.facturesEnpartie.montant += facture.montantPayer || 0;
             }
             stats.totalResteApayer += facture.resteApayer || 0;
         });
 
-         console.log("stats1:",stats)
-        // Calcul du total des commissions des cours à domicile et charges
+         console.log("stats après traitement factures:",stats)
+        
+        // Calcul du total des commissions des cours à domicile
         stats.totalCommissionCoursDomicile = commissions.reduce((acc, cur) => acc + (cur.commission || 0), 0);
+        
+        // Calcul du total des charges
         stats.totalCharge = charges.reduce((acc, charg) => acc + (charg.montant || 0), 0);
-        console.log("stats2:",stats)
+        
+        // Calcul des totaux
+        stats.totalRecettes = stats.facturesPaye.montant + stats.facturesEnpartie.montant + stats.totalCommissionCoursDomicile;
+        stats.beneficeNet = stats.totalRecettes - stats.totalCharge;
+        
+        console.log("stats finales:",stats)
         res.status(200).json(stats);
             } catch (error) {
+             console.log("Erreur dans genererBilan:", error);
              res.status(500).json({ message: error.message });
             }
 }
@@ -388,7 +405,7 @@ const cloturer= async (req, res, next) => {
 const bilanByAnnee= async (req, res, next) => {
    try {
        const creerPar = req.user;
-       const anneeAcademique=req.body.anneeAcademique 
+       const anneeAcademique = req.params.annee;  // Changé de req.body à req.params
        const bilan= await Bilan.findOne({creerPar,anneeAcademique})
        console.log(bilan)
        res.json(bilan)
