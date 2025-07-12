@@ -410,13 +410,16 @@ const statistiqueFactures = async (req, res, next) => {
         // Récupérer toutes les commissions des cours à domicile pour la période donnée
         const commissions = await cours.find({ creerPar, anneeAcademique});
         console.log("commissions:",commissions)
+        const charges = await charge.find({periode, creerPar, anneeAcademique});
+        console.log("charges:",charges)
         // Initialisation des compteurs et montants
         let stats = {
             paye: { count: 0, montant: 0 },
             impaye: { count: 0, montant: 0 },
             enpartie: { count: 0, montant: 0 },
             totalResteApayer: 0,
-            totalCommissionCoursDomicile: 0
+            totalCommissionCoursDomicile: 0,
+            totalCharge:0
         };
 
         factures.forEach(facture => {
@@ -435,6 +438,7 @@ const statistiqueFactures = async (req, res, next) => {
       console.log("stats1:",stats)
         // Calcul du total des commissions des cours à domicile
         stats.totalCommissionCoursDomicile = commissions.reduce((acc, cur) => acc + (cur.commission || 0), 0);
+        stats.totalCharge = charges.reduce((acc, charg) => acc + (charg.montant || 0), 0);
      console.log("stats2:",stats)
         res.status(200).json(stats);
     } catch (error) {
