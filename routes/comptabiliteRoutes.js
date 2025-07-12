@@ -16,13 +16,12 @@ listeComission,
 creerCharge,
   voirTotal,
 listeCharge,
-voirByIdBilan,
+genererBilan,
   voirCharge,
   modifierCharge,
   supprimerCharge,
 cloturer,
-  partager,
-listeBilan,
+bilanByAnnee,
 getFactureById,
 payerEncoreFacture,
 statistiqueFactures,
@@ -56,9 +55,8 @@ router.get("/voirCharge/:id",auth, voirCharge);
 
 /* ----------------------- Bilan ---------------------------------*/
 router.post("/cloturer", cloturer);
-router.get("/voirByIdBilan/:id",auth, voirByIdBilan); 
-router.post("/partager",partager);
-router.get("/listeBilan",auth, listeBilan);
+router.get("/genererBilan/:annee",auth, genererBilan); 
+router.get("/bilanByAnnee/:annee",auth, bilanByAnnee);
 router.get("/voirTotal",auth, voirTotal);
 
 module.exports = {

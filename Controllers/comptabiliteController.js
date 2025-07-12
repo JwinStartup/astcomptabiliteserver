@@ -8,6 +8,7 @@ const moment = require("moment")
 const axios = require("axios");
 const { patch } = require("../routes/cours.js");
 const cours = require("../models/cours.js");
+const charge = require("../models/charge.js");
 const periode=`${moment(new Date()).locale('fr').format("MMM")}  ${moment(new Date()).locale('fr').format("YYYY")}`
  
     /* ----------------------- facture ---------------------------------*/
@@ -294,21 +295,49 @@ const voirCharge= async (req, res, next) => {
         
         /* ----------------------- Bilan ---------------------------------*/
         
-        const voirByIdBilan= async (req, res, next) => {
-            try{
-            const arrayComm= await Commission.find({periode:periode,creerPar:req.user})
-            const arrayCharge= await Charge.find({periode:periode,creerPar:req.user})
-            const arrayRecue= await Paiement.find({periode:periode,creerPar:req.user})
-                const bilanPeriode= await Bilan.findById(req.params.id)
-              if ( bilanPeriode.statut!=='cloturé') {
-               bilanPeriode.charge= await arrayCharge.reduce((acc,cur)=> acc + cur.montant,0)
-               bilanPeriode.recette= await arrayRecue.reduce((acc,cur)=> acc + cur.montant,0)
-                 await  bilanPeriode.save().then((doc)=>res.status(200).json(doc))
-              } else {
-                  res.status(200).json(bilanPeriode)
-              }
-            }catch(error){
-             console.log(error)
+        const genererBilan= async (req, res, next) => {
+            try {
+                 console.log(req.params)
+              const creerPar = req.user;
+            const anneeAcademique=req.params.annee 
+    // Récupérer toutes les factures de l'utilisateur pour l'année academique donnée
+        const factures = await Facture.find({ creerPar, anneeAcademique });
+         console.log("factures:",factures)
+        // Récupérer toutes les commissions des cours à domicile pour l'année donnée
+        const commissions = await cours.find({ creerPar, anneeAcademique});
+        console.log("commissions:",commissions)
+        // Récupérer toutes les charges pour la période donnée
+        const charges = await charge.find({ creerPar, anneeAcademique});
+        console.log("charges:",charges)
+        // Initialisation des compteurs et montants
+        let stats = {
+            paye: 0,
+            impaye: 0,
+            enpartie: 0,
+            totalResteApayer: 0,
+            totalCommissionCoursDomicile: 0,
+            totalCharge:0
+        };
+
+        factures.forEach(facture => {
+            if (facture.type === "paye" || facture.type === "totalite") {
+                stats.paye.montant += facture.montantPayer || 0;
+            } else if (facture.type === "impaye") {
+                stats.impaye.montant += facture.montant || 0;
+            } else if (facture.type === "enpartie") {
+                stats.enpartie.montant += facture.montantPayer || 0;
+            }
+            stats.totalResteApayer += facture.resteApayer || 0;
+        });
+
+         console.log("stats1:",stats)
+        // Calcul du total des commissions des cours à domicile et charges
+        stats.totalCommissionCoursDomicile = commissions.reduce((acc, cur) => acc + (cur.commission || 0), 0);
+        stats.totalCharge = charges.reduce((acc, charg) => acc + (charg.montant || 0), 0);
+        console.log("stats2:",stats)
+        res.status(200).json(stats);
+            } catch (error) {
+             res.status(500).json({ message: error.message });
             }
 }
         const voirTotal= async (req, res, next) => {
@@ -338,50 +367,31 @@ const voirCharge= async (req, res, next) => {
 
 const cloturer= async (req, res, next) => {
      try{
-   const bilanPeriode= await Bilan.findById(req.body.id)
-   bilanPeriode.resultat=req.body.resultat
-   bilanPeriode.statut='cloturé'
-   await  bilanPeriode.save().then((doc)=>res.status(200).json(doc))
-            }catch(error){
-             console.log(error)
-            }
-}
-const partager= async (req, res, next) => {
-    console.log(req.body.url)
-      try {
-    let url = "https://graph.facebook.com/v18.0/250250498176635/messages";
-
-let payload = {
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": "+2250500908420",
-      "type": "document",
-      "document": { // the text object
-        "link": `${req.body.url}`,
-        "filename":`${req.body.filename}`
-        }
-        };
-
-let  headers = {
-                'Authorization': 'Bearer EAAENJVQnPZCsBO9Ezn4FPwy5p6gJWU4h2qZCNtpk4I1V6faNd5IPsn7PqrFloO0mhT9dvaCDU9s7KlGoD93UE7lSwQWhVuZB7O6qT6Fy3PCI8MqR5hbhitNKSZCZAAXcIrZCh5VZCHdorMKZCcDoObgg7M1WwZBZBiZCclTLXAs0qHlSxJTlpZA75IGr57GGwolB4nBtR4AtnAtZBQQUzOaiqWUYZD',
-                'Content-Type': 'application/json'
-               };
-
-  axios.post(url, payload, {
-    headers: headers
-  })
-  .then(function (response) {
-    res.status(200).json({message:'succes'})
-  })
+           const bilan= new Bilan({
+            resultat:req.body.resultat ,
+            totalCharge:req.body.totalCharge ,
+            totalCommission:req.body.totalCommission ,
+            factureImpaye:req.body.factureImpaye,
+            facturePartielpayer:req.body.facturePartielpayer ,
+            factureResteapayer:req.body.factureResteapayer,
+            anneeAcademique:req.body.anneeAcademique ,
+            creerPar:req.user,
+           }).save()
+           console.log(bilan)
+            res.json(bilan)
         } catch (error) {
+            res.json({message:error})
         console.error(error);
     }
 }
 
-const listeBilan= async (req, res, next) => {
+const bilanByAnnee= async (req, res, next) => {
    try {
-       const liste= await Bilan.find({creerPar:req.user}).sort({'updatedAt': -1})
-       res.status(200).json(liste)
+       const creerPar = req.user;
+       const anneeAcademique=req.body.anneeAcademique 
+       const bilan= await Bilan.findOne({creerPar,anneeAcademique})
+       console.log(bilan)
+       res.json(bilan)
    } catch (error) {
        res.json({message:error});
    }
@@ -434,7 +444,6 @@ const statistiqueFactures = async (req, res, next) => {
 
 module.exports = { 
     creerFacture,
-    partager,
     modifierFacture,
     payerFacture,
     payerEncoreFacture,
@@ -450,9 +459,9 @@ module.exports = {
     modifierCharge,
     supprimerCharge,
     listeCharge,
-    voirByIdBilan,
+    genererBilan,
     cloturer,
     getFactureById,
-    listeBilan,
+    bilanByAnnee,
     statistiqueFactures
 };

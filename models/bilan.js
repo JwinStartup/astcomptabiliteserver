@@ -2,23 +2,26 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 var bilanSchema = new Schema({
-  recette: {
-    type: Number,
-  },
-  charge: {
-    type: Number,
-  },
-  commission: {
-    type: Number,
-  },
   resultat: {
     type: Number,
   },
-  statut: {
+  totalCharge: {
+    type: Number,
+  },
+  totalCommission: {
+    type: Number,
+  },
+  factureImpaye: {
+    type: Number,
+  },
+  facturePartielpayer: {
+    type: String,
+  },
+  factureResteapayer: {
     type: String,
   },
 
-periode: {
+anneeAcademique: {
     type: String,
   },
  
