@@ -491,7 +491,8 @@ const statistiqueFactures = async (req, res, next) => {
       //verifie si le bilan de l'année académique existe déjà
         // Si le bilan existe déjà, on le retourne true à la variable bilanCloture qui sera dans les statistiques initialisé à false
         const bilanCloture = await Bilan.findOne({ creerPar, annee: anneeAcademique });
-          if (bilanCloture) {
+         console.log(bilanCloture) 
+        if (bilanCloture) {
             stats.bilanCloture = bilanCloture?._id;
         }
              // Si le bilan existe, on met à jour la variable bilanCloture
