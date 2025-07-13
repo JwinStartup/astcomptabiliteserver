@@ -395,30 +395,38 @@ const voirCharge= async (req, res, next) => {
 
 const cloturer= async (req, res, next) => {
      try{
-        console.log(req.body)
-           const bilan= new Bilan({
-            resultat:req.body.resultat ,
-            totalCharge:req.body.totalCharge ,
-            totalCommission:req.body.totalCommission ,
-            factureImpaye:req.body.factureImpaye,
-            facturePartielpayer:req.body.facturePartielpayer ,
-            factureResteapayer:req.body.factureResteapayer,
-            anneeAcademique:req.body.anneeAcademique ,
-            creerPar:req.user,
-           }).save()
-           console.log(bilan)
-            res.json(bilan)
-        } catch (error) {
-            res.json({message:error})
-        console.error(error);
+        console.log('Données reçues pour clôturer:', req.body)
+        
+        // Créer un nouveau bilan avec toutes les données de req.body
+        const bilan = new Bilan({
+            // Nouveaux champs principaux
+            facturesPaye: req.body.facturesPaye || 0,
+            facturesImpaye: req.body.facturesImpaye || 0,
+            facturesEnpartie: req.body.facturesEnpartie || 0,
+            totalResteApayer: req.body.totalResteApayer || 0,
+            totalCommissionCoursDomicile: req.body.totalCommissionCoursDomicile || 0,
+            totalCharge: req.body.totalCharge || 0,
+            totalRecettes: req.body.totalRecettes || 0,
+            beneficeNet: req.body.beneficeNet || 0,
+            annee: req.body.annee || req.body.anneeAcademique,
+            
+                       // Utilisateur qui crée le bilan
+            creerPar: req.user,
+        });
+
+        const bilanSauvegarde = await bilan.save();
+        console.log('Bilan créé avec succès:', bilanSauvegarde)
+        res.status(201).json(bilanSauvegarde)
+        
+    } catch (error) {
+        console.error('Erreur lors de la création du bilan:', error);
+        res.status(500).json({message: error.message || error})
     }
 }
 
-const bilanByAnnee= async (req, res, next) => {
+const bilanById= async (req, res, next) => {
    try {
-       const creerPar = req.user;
-       const anneeAcademique = req.params.annee;  // Changé de req.body à req.params
-       const bilan= await Bilan.findOne({creerPar,anneeAcademique})
+       const bilan= await Bilan.findById(req.params.id)
        console.log(bilan)
        res.json(bilan)
    } catch (error) {
@@ -433,7 +441,10 @@ const statistiqueFactures = async (req, res, next) => {
         const creerPar = req.user;
         const periode = req.body.periode;
        const anneeAcademique=req.body.anneeAcademique 
-       
+      
+        console.log("bilanCloture:", bilanCloture);
+        // Si le bilan existe déjà, on le retourne true à la variable bilanCloture
+           
         // Calculer les dates de début et fin pour l'année académique
         const debutAnnee = new Date(`${anneeAcademique}-01-01`);
         const finAnnee = new Date(`${anneeAcademique}-12-31T23:59:59.999Z`);
@@ -460,7 +471,8 @@ const statistiqueFactures = async (req, res, next) => {
             enpartie: { count: 0, montant: 0 },
             totalResteApayer: 0,
             totalCommissionCoursDomicile: 0,
-            totalCharge:0
+            totalCharge:0,
+            bilanCloture: null, 
         };
 
         factures.forEach(facture => {
@@ -477,6 +489,13 @@ const statistiqueFactures = async (req, res, next) => {
             stats.totalResteApayer += facture.resteApayer || 0;
         });
       console.log("stats1:",stats)
+      //verifie si le bilan de l'année académique existe déjà
+        // Si le bilan existe déjà, on le retourne true à la variable bilanCloture qui sera dans les statistiques initialisé à false
+        const bilanCloture = await Bilan.findOne({ creerPar, annee: anneeAcademique });
+          if (bilanCloture) {
+            stats.bilanCloture = bilanCloture?._id;
+        }
+             // Si le bilan existe, on met à jour la variable bilanCloture
         // Calcul du total des commissions des cours à domicile
         stats.totalCommissionCoursDomicile = commissions.reduce((acc, cur) => acc + (cur.commission || 0), 0);
         stats.totalCharge = charges.reduce((acc, charg) => acc + (charg.montant || 0), 0);
@@ -507,6 +526,6 @@ module.exports = {
     genererBilan,
     cloturer,
     getFactureById,
-    bilanByAnnee,
+    bilanById,
     statistiqueFactures
 };

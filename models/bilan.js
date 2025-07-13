@@ -2,33 +2,46 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 var bilanSchema = new Schema({
-  resultat: {
+  facturesPaye: {
     type: Number,
+    default: 0
+  },
+  facturesImpaye: {
+    type: Number,
+    default: 0
+  },
+  facturesEnpartie: {
+    type: Number,
+    default: 0
+  },
+  totalResteApayer: {
+    type: Number,
+    default: 0
+  },
+  totalCommissionCoursDomicile: {
+    type: Number,
+    default: 0
   },
   totalCharge: {
     type: Number,
+    default: 0
   },
-  totalCommission: {
+  totalRecettes: {
     type: Number,
+    default: 0
   },
-  factureImpaye: {
+  beneficeNet: {
     type: Number,
+    default: 0
   },
-  facturePartielpayer: {
+  annee: {
     type: String,
+    required: true
   },
-  factureResteapayer: {
-    type: String,
-  },
-
-anneeAcademique: {
-    type: String,
-  },
- 
   creerPar:{
     type:Schema.Types.ObjectId,
- ref:'User'
-}
+    ref:'User'
+  }
 },
 {
   timestamps: true

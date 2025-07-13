@@ -21,7 +21,7 @@ genererBilan,
   modifierCharge,
   supprimerCharge,
 cloturer,
-bilanByAnnee,
+bilanById,
 getFactureById,
 payerEncoreFacture,
 statistiqueFactures,
@@ -56,7 +56,7 @@ router.get("/voirCharge/:id",auth, voirCharge);
 /* ----------------------- Bilan ---------------------------------*/
 router.post("/cloturer", cloturer);
 router.get("/genererBilan/:annee",auth, genererBilan); 
-router.get("/bilanByAnnee/:annee",auth, bilanByAnnee);
+router.get("/bilanById/:id",auth, bilanById);
 router.get("/voirTotal",auth, voirTotal);
 
 module.exports = {
