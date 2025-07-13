@@ -473,7 +473,7 @@ const statistiqueFactures = async (req, res, next) => {
             totalCharge:0,
             bilanCloture: null, 
         };
-
+        
         factures.forEach(facture => {
             if (facture.type === "paye" || facture.type === "totalite") {
                 stats.paye.count += 1;
@@ -487,11 +487,16 @@ const statistiqueFactures = async (req, res, next) => {
             }
             stats.totalResteApayer += facture.resteApayer || 0;
         });
-      console.log("stats1:",stats)
-      //verifie si le bilan de l'année académique existe déjà
+        console.log("stats1:",stats)
+        //verifie si le bilan de l'année académique existe déjà
         // Si le bilan existe déjà, on le retourne true à la variable bilanCloture qui sera dans les statistiques initialisé à false
-        const bilanCloture = await Bilan.findOne({ creerPar, annee: anneeAcademique });
-         console.log(bilanCloture) 
+        const bilanCloture = await Bilan.findOne({ 
+            creerPar,
+            $expr: {
+                $eq: [{ $year: "$createdAt" }, parseInt(anneeAcademique)]
+            }
+        });
+         console.log("Bilan existant trouvé:", bilanCloture) 
         if (bilanCloture) {
             stats.bilanCloture = bilanCloture?._id;
         }
