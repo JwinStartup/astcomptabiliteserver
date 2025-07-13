@@ -442,7 +442,6 @@ const statistiqueFactures = async (req, res, next) => {
         const periode = req.body.periode;
        const anneeAcademique=req.body.anneeAcademique 
       
-        console.log("bilanCloture:", bilanCloture);
         // Si le bilan existe déjà, on le retourne true à la variable bilanCloture
            
         // Calculer les dates de début et fin pour l'année académique
