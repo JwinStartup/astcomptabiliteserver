@@ -297,7 +297,7 @@ const voirCharge= async (req, res, next) => {
         
         const genererBilan= async (req, res, next) => {
             try {
-                 console.log(req.params)
+                 console.log('les parametre genererBilan',req.params)
               const creerPar = req.user;
             const anneeAcademique=req.params.annee 
     // Récupérer toutes les factures de l'utilisateur pour l'année academique donnée
