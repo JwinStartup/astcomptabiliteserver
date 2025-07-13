@@ -340,11 +340,11 @@ const voirCharge= async (req, res, next) => {
         // Traitement des factures
         factures.forEach(facture => {
             if (facture.type === "paye" || facture.type === "totalite") {
-                stats.facturesPaye.montant += facture.montantPayer || 0;
+                stats.facturesPaye += facture.montantPayer || 0;
             } else if (facture.type === "impaye") {
-                stats.facturesImpaye.montant += facture.montant || 0;
+                stats.facturesImpaye += facture.montant || 0;
             } else if (facture.type === "enpartie") {
-                stats.facturesEnpartie.montant += facture.montantPayer || 0;
+                stats.facturesEnpartie += facture.montantPayer || 0;
             }
             stats.totalResteApayer += facture.resteApayer || 0;
         });
@@ -355,10 +355,10 @@ const voirCharge= async (req, res, next) => {
         stats.totalCommissionCoursDomicile = commissions.reduce((acc, cur) => acc + (cur.commission || 0), 0);
         
         // Calcul du total des charges
-        stats.totalCharge = charges.reduce((acc, charg) => acc + (charg.montant || 0), 0);
+        stats.totalCharge = charges.reduce((acc, charg) => acc + (charg || 0), 0);
         
         // Calcul des totaux
-        stats.totalRecettes = stats.facturesPaye.montant + stats.facturesEnpartie.montant + stats.totalCommissionCoursDomicile;
+        stats.totalRecettes = stats.facturesPaye + stats.facturesEnpartie + stats.totalCommissionCoursDomicile;
         stats.beneficeNet = stats.totalRecettes - stats.totalCharge;
         
         console.log("stats finales:",stats)
