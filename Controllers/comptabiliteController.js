@@ -295,19 +295,33 @@ const voirCharge= async (req, res, next) => {
         
         /* ----------------------- Bilan ---------------------------------*/
         
-        const genererBilan= async (req, res, next) => {
+        const  genererBilan= async (req, res, next) => {
             try {
                  console.log('les parametre genererBilan',req.params)
               const creerPar = req.user;
-            const anneeAcademique=req.params.anneeAcademique 
-    // Récupérer toutes les factures de l'utilisateur pour l'année academique donnée
-        const factures = await Facture.find({ creerPar, anneeAcademique });
+            const annee = req.params.annee;
+            
+            // Calculer les dates de début et fin pour l'année de création
+            const debutAnnee = new Date(`${annee}-01-01`);
+            const finAnnee = new Date(`${annee}-12-31T23:59:59.999Z`);
+            
+    // Récupérer toutes les factures de l'utilisateur pour l'année de création donnée
+        const factures = await Facture.find({ 
+            creerPar, 
+            createdAt: { $gte: debutAnnee, $lte: finAnnee }
+        });
          console.log("factures:",factures)
         // Récupérer toutes les commissions des cours à domicile pour l'année donnée
-        const commissions = await cours.find({ creerPar, anneeAcademique});
+        const commissions = await cours.find({ 
+            creerPar, 
+            createdAt: { $gte: debutAnnee, $lte: finAnnee }
+        });
         console.log("commissions:",commissions)
-        // Récupérer toutes les charges pour l'année académique donnée
-        const charges = await charge.find({ creerPar, anneeAcademique});
+        // Récupérer toutes les charges pour l'année de création donnée
+        const charges = await charge.find({ 
+            creerPar, 
+            createdAt: { $gte: debutAnnee, $lte: finAnnee }
+        });
         console.log("charges:",charges)
         
         // Initialisation des compteurs et montants
@@ -320,7 +334,7 @@ const voirCharge= async (req, res, next) => {
             totalCharge: 0,
             totalRecettes: 0,
             beneficeNet: 0,
-            anneeAcademique: anneeAcademique
+            annee: annee
         };
 
         // Traitement des factures
