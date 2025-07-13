@@ -326,9 +326,9 @@ const voirCharge= async (req, res, next) => {
         
         // Initialisation des compteurs et montants
         let stats = {
-            facturesPaye: { count: 0, montant: 0 },
-            facturesImpaye: { count: 0, montant: 0 },
-            facturesEnpartie: { count: 0, montant: 0 },
+            facturesPaye: 0,
+            facturesImpaye: 0,
+            facturesEnpartie: 0,
             totalResteApayer: 0,
             totalCommissionCoursDomicile: 0,
             totalCharge: 0,
@@ -340,13 +340,10 @@ const voirCharge= async (req, res, next) => {
         // Traitement des factures
         factures.forEach(facture => {
             if (facture.type === "paye" || facture.type === "totalite") {
-                stats.facturesPaye.count += 1;
                 stats.facturesPaye.montant += facture.montantPayer || 0;
             } else if (facture.type === "impaye") {
-                stats.facturesImpaye.count += 1;
                 stats.facturesImpaye.montant += facture.montant || 0;
             } else if (facture.type === "enpartie") {
-                stats.facturesEnpartie.count += 1;
                 stats.facturesEnpartie.montant += facture.montantPayer || 0;
             }
             stats.totalResteApayer += facture.resteApayer || 0;
@@ -435,13 +432,25 @@ const statistiqueFactures = async (req, res, next) => {
         const creerPar = req.user;
         const periode = req.body.periode;
        const anneeAcademique=req.body.anneeAcademique 
+       
+        // Calculer les dates de début et fin pour l'année académique
+        const debutAnnee = new Date(`${anneeAcademique}-01-01`);
+        const finAnnee = new Date(`${anneeAcademique}-12-31T23:59:59.999Z`);
+        
         // Récupérer toutes les factures de l'utilisateur pour la période donnée
         const factures = await Facture.find({ creerPar, periode });
          console.log("factures:",factures)
-        // Récupérer toutes les commissions des cours à domicile pour la période donnée
-        const commissions = await cours.find({ creerPar, anneeAcademique});
+        // Récupérer toutes les commissions des cours à domicile pour l'année donnée
+        const commissions = await cours.find({ 
+            creerPar, 
+            createdAt: { $gte: debutAnnee, $lte: finAnnee }
+        });
         console.log("commissions:",commissions)
-        const charges = await charge.find({periode, creerPar, anneeAcademique});
+        const charges = await charge.find({
+            periode, 
+            creerPar, 
+            createdAt: { $gte: debutAnnee, $lte: finAnnee }
+        });
         console.log("charges:",charges)
         // Initialisation des compteurs et montants
         let stats = {
