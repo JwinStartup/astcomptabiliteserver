@@ -395,6 +395,7 @@ const voirCharge= async (req, res, next) => {
 
 const cloturer= async (req, res, next) => {
      try{
+        console.log(req.body)
            const bilan= new Bilan({
             resultat:req.body.resultat ,
             totalCharge:req.body.totalCharge ,
