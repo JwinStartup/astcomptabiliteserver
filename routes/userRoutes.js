@@ -27,6 +27,7 @@ const {
   modifierParent,
   modifierEnfant,
   supprimer,
+  changerMotPasse
 } = require("../Controllers/userController.js");
 const auth = require("../Middleware/auth.js");
 
