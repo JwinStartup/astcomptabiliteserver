@@ -54,7 +54,7 @@ router.get("/supprimerCharge/:id",auth, supprimerCharge);
 router.get("/voirCharge/:id",auth, voirCharge); 
 
 /* ----------------------- Bilan ---------------------------------*/
-router.post("/cloturer", cloturer);
+router.post("/cloturer",auth, cloturer);
 router.get("/genererBilan/:annee",auth, genererBilan); 
 router.get("/bilanById/:id",auth, bilanById);
 router.get("/voirTotal",auth, voirTotal);

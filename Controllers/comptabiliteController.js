@@ -484,13 +484,12 @@ const statistiqueFactures = async (req, res, next) => {
             }
             stats.totalResteApayer += facture.resteApayer || 0;
         });
-        console.log("stats1:",stats)
         //verifie si le bilan de l'année académique existe déjà
         // Si le bilan existe déjà, on le retourne true à la variable bilanCloture qui sera dans les statistiques initialisé à false
         const bilanCloture = await Bilan.findOne({ 
             creerPar,
             //on utilisera annee egale req.body.anneeAcademique 
-            annee: anneeAcademique,
+            annee: req.body.anneeAcademique,
         });
          console.log("Bilan existant trouvé:", bilanCloture) 
         if (bilanCloture) {
@@ -500,7 +499,6 @@ const statistiqueFactures = async (req, res, next) => {
         // Calcul du total des commissions des cours à domicile
         stats.totalCommissionCoursDomicile = commissions.reduce((acc, cur) => acc + (cur.commission || 0), 0);
         stats.totalCharge = charges.reduce((acc, charg) => acc + (charg.montant || 0), 0);
-     console.log("stats2:",stats)
         res.status(200).json(stats);
     } catch (error) {
         res.status(500).json({ message: error.message });
