@@ -12,20 +12,28 @@ const cookieParser=require('cookie-parser')
 const port =process.env.PORT || 8080;
 const app = express();
 app.use(express.json());
-app.use(cors(
-  {
-  origin:"https://astcomptabilite.netlify.app",
-  credentials:true
-  }
-));
+
+// Configuration CORS améliorée
+app.use(cors({
+  origin: ["https://astcomptabilite.netlify.app", "http://localhost:3000"],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+  allowedHeaders: ["Content-Type", "Authorization", "Accept", "Origin", "X-Requested-With"],
+  exposedHeaders: ["Set-Cookie"]
+}));
+
 app.use(cookieParser())
 app.use(bodyParser.json());
-app.use((req, res, next) => {
 
-  res.setHeader("Access-Control-Allow-Methods", "POST,GET,OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
+// Middleware CORS supplémentaire pour gérer les cas spéciaux
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "https://astcomptabilite.netlify.app");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept, Origin, X-Requested-With");
+  
   if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
+    return res.status(200).end();
   }
   next();
 });
