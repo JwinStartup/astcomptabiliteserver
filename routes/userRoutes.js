@@ -32,6 +32,7 @@ const auth = require("../Middleware/auth.js");
 
 router.post("/inscription",auth, inscription);
 router.post("/modifier",auth, modifier);
+router.post("/changerMotPasse",auth, changerMotPasse);
 router.post("/inscriptionParent",auth, inscriptionParent);
 router.post("/inscriptionEnfant",auth, inscriptionEnfant);
 router.post("/inscriptionPersonnel",auth, inscriptionPersonnel);

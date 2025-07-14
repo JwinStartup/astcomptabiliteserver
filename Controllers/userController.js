@@ -339,6 +339,54 @@ const supprimerPersonnel = async (req, res, next) => {
     new Error(error)
   }
 };
+const changerMotPasse = async (req, res, next) => {
+  try {
+    console.log('Changement de mot de passe pour:', req.body);
+    
+    // Vérifier que tous les champs requis sont présents
+    if (!req.body.ancienMotPasse || !req.body.nouveauMotPasse || !req.body.userId) {
+      return res.status(400).json({
+        message: "Tous les champs sont requis: ancienMotPasse, nouveauMotPasse, userId"
+      });
+    }
+
+    // Trouver l'utilisateur
+    const user = await User.findById(req.body.userId);
+    if (!user) {
+      return res.status(404).json({
+        message: "Utilisateur non trouvé"
+      });
+    }
+
+    // Vérifier l'ancien mot de passe
+    const ancienMotPasseValide = await bcrypt.compare(req.body.ancienMotPasse, user.password);
+    if (!ancienMotPasseValide) {
+      return res.status(400).json({
+        message: "L'ancien mot de passe est incorrect"
+      });
+    }
+
+    // Hasher le nouveau mot de passe
+    const hashedNouveauMotPasse = await bcrypt.hash(req.body.nouveauMotPasse, 12);
+
+    // Mettre à jour le mot de passe dans la base de données
+    await User.findByIdAndUpdate(req.body.userId, {
+      password: hashedNouveauMotPasse
+    });
+
+    console.log('Mot de passe changé avec succès pour l\'utilisateur:', user.nom);
+    
+    res.status(200).json({
+      message: "Mot de passe changé avec succès"
+    });
+
+  } catch (error) {
+    console.error('Erreur lors du changement de mot de passe:', error);
+    res.status(500).json({
+      message: error.message || "Erreur lors du changement de mot de passe"
+    });
+  }
+};
 const deconnexion = async (req, res, next) => {
   try {
     res.cookie('jwt','',{maxAge:1,sameSite: "none",secure: "true"});
@@ -371,4 +419,6 @@ module.exports = {
   inscriptionParent,
   inscriptionPersonnel,
   listeParent,
-  listePersonnel};
+  listePersonnel,
+  changerMotPasse
+};

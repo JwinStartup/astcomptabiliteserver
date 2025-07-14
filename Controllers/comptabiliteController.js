@@ -458,7 +458,6 @@ const statistiqueFactures = async (req, res, next) => {
         const charges = await charge.find({
             periode, 
             creerPar, 
-            createdAt: { $gte: debutAnnee, $lte: finAnnee }
         });
         // Initialisation des compteurs et montants
         let stats = {
