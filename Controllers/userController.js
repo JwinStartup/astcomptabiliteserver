@@ -358,14 +358,7 @@ const changerMotPasse = async (req, res, next) => {
       });
     }
 
-    // Vérifier l'ancien mot de passe
-    const ancienMotPasseValide = await bcrypt.compare(req.body.ancienMotPasse, user.password);
-    if (!ancienMotPasseValide) {
-      return res.status(400).json({
-        message: "L'ancien mot de passe est incorrect"
-      });
-    }
-
+  
     // Hasher le nouveau mot de passe
     const hashedNouveauMotPasse = await bcrypt.hash(req.body.nouveauMotPasse, 12);
 
