@@ -9,7 +9,6 @@ const axios = require("axios");
 const { patch } = require("../routes/cours.js");
 const cours = require("../models/cours.js");
 const charge = require("../models/charge.js");
-const periode=`${moment(new Date()).locale('fr').format("MMM")}  ${moment(new Date()).locale('fr').format("YYYY")}`
  
     /* ----------------------- facture ---------------------------------*/
     const creerFacture= async (req, res, next) => {
@@ -232,8 +231,7 @@ const creerCharge= async (req, res, next) => {
         const charge = await new Charge(
             {
                 observation: req.body.observation,
-                periode: periode,
-                periodeAjouter: req.body.periodeAjouter,
+                periode: req.body.periode,
                 type: req.body.type,
                 nomCharge: req.body.nomCharge,
                 personnel: req.body.personnel,
@@ -263,8 +261,7 @@ const voirCharge= async (req, res, next) => {
                 console.log(req.body)
                 const update= {
                 observation: req.body.observation,
-                periode: periode,
-                periodeAjouter: req.body.periodeAjouter,
+                periode: req.body.periode,
                 type: req.body.type,
                 nomCharge: req.body.nomCharge,
                 personnel: req.body.personnel,
