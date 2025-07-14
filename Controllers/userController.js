@@ -134,7 +134,7 @@ const inscription = async (req, res, next) => {
       const user = await new User({
         nom: req.body.nom,
         email: req.body.email,
-          zone:req.body.zone,
+        zone:req.body.zone,
         role:req.body.role,
         cel:req.body.cel,
         password: hashedpassword,
@@ -196,7 +196,7 @@ const modifier = async (req, res, next) => {
     const moi = await User.findByIdAndUpdate(req.body._id,{
         role:req.body.role,
         zone:req.body.zone,
-        cel:req.body.cel,});
+        cel:req.body.cel});
     res.json(moi);
   } catch (error) {
     new Error(error)
