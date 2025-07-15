@@ -355,7 +355,7 @@ const voirCharge= async (req, res, next) => {
         stats.totalCharge = charges.reduce((acc, charg) => acc + (charg.montant || 0), 0);
         
         // Calcul des totaux
-        stats.totalRecettes = stats.facturesPaye + stats.facturesEnpartie + stats.totalCommissionCoursDomicile;
+        stats.totalRecettes = stats.facturesPaye + stats.facturesEnpartie ;
         stats.beneficeNet = stats.totalRecettes - stats.totalCharge;
         
         console.log("stats finales:",stats)
