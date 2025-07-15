@@ -15,7 +15,7 @@ app.use(express.json());
 
 // Configuration CORS améliorée
 app.use(cors({
-  origin: ["https://astcomptabilite.netlify.app", "http://localhost:3000"],
+  origin: ["https://astcomptabilite.netlify.app","https://astcomptabilite.ci","http://localhost:3000"],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization", "Accept", "Origin", "X-Requested-With"],
@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 
 // Middleware CORS supplémentaire pour gérer les cas spéciaux
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://astcomptabilite.netlify.app");
+  res.setHeader("Access-Control-Allow-Origin", "https://astcomptabilite.ci");
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept, Origin, X-Requested-With");
